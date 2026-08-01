@@ -8,6 +8,7 @@ Depends on: —
 Personal website that also works as Bruno's resume and as his AI-agent-engineering portfolio piece. The site itself is the showcased project (his production work is on proprietary employer codebases that can't be shared), so it links to its own public GitHub repo as the "view source" proof point.
 
 It needs to demonstrate two things at once:
+
 - Frontend craft (Next.js, TypeScript, MUI theming, responsive design, full testing pyramid, accessibility).
 - AI agent engineering skill (a Claude-powered chatbot that can talk about Bruno and use tools).
 
