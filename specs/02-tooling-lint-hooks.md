@@ -1,6 +1,6 @@
 # 02 — Tooling: Lint, Format, Git Hooks
 
-Status: Approved
+Status: Implemented
 Depends on: [01-project-scaffold](./01-project-scaffold.md)
 
 ## Goal

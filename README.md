@@ -18,3 +18,12 @@ Next.js (App Router) · TypeScript · Material UI · Playwright · Storybook · 
 ## Project source of truth
 
 This project is built spec-first: every feature is designed in [`/specs`](./specs) and approved before it's implemented. Start with [`specs/00-overview.md`](./specs/00-overview.md) for the full plan, stack decisions, and roadmap.
+
+## Git hooks
+
+Husky enforces quality gates automatically (installed via `pnpm install`, no extra setup needed):
+
+- **pre-commit** — runs `lint-staged`: ESLint `--fix` and Prettier on staged files only. Fast, runs on every commit.
+- **pre-push** — runs `typecheck`, `test`, and `build` in full. Slower, but only runs when code is about to leave your machine. A failure here blocks the push.
+
+Bypassing either hook (`git commit --no-verify` / `git push --no-verify`) should be rare — only for genuine emergencies, since it skips the checks that keep `main` in a working state.
