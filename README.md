@@ -15,6 +15,19 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Next.js (App Router) · TypeScript · Material UI · Playwright · Storybook · MSW · Jest + React Testing Library
 
+## Testing
+
+| Command                | Runs                                                      |
+| ---------------------- | --------------------------------------------------------- |
+| `pnpm test`            | Jest + React Testing Library (unit/component)             |
+| `pnpm test:watch`      | Jest in watch mode                                        |
+| `pnpm storybook`       | Storybook dev server (component catalog)                  |
+| `pnpm build-storybook` | Static Storybook build                                    |
+| `pnpm test:storybook`  | Storybook interaction tests (via Vitest browser mode)     |
+| `pnpm test:e2e`        | Playwright end-to-end tests (boots the app automatically) |
+
+API mocking for tests uses [MSW](https://mswjs.io) — handlers live in `src/mocks/handlers.ts` and are shared between Jest and Storybook.
+
 ## Project source of truth
 
 This project is built spec-first: every feature is designed in [`/specs`](./specs) and approved before it's implemented. Start with [`specs/00-overview.md`](./specs/00-overview.md) for the full plan, stack decisions, and roadmap.
