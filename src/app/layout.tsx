@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { getLocale } from "next-intl/server";
 import { ThemeRegistry } from "@/components/ThemeRegistry";
 import "./globals.css";
 
@@ -13,13 +14,15 @@ export const metadata: Metadata = {
   description: "Personal website and resume.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+
   return (
-    <html lang="en" className={sans.variable}>
+    <html lang={locale} className={sans.variable}>
       <body>
         <ThemeRegistry>{children}</ThemeRegistry>
       </body>

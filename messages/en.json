@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Home",
+    "studies": "Studies",
+    "experience": "Experience",
+    "skills": "Skills",
+    "about": "About",
+    "contact": "Contact",
+    "languageSwitcher": "Select language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "footer": {
+    "copyright": "© {year} Bruno Morales. All rights reserved.",
+    "viewSource": "View source on GitHub"
+  },
+  "home": {
+    "title": "myself",
+    "subtitle": "Theme smoke test",
+    "body": "Scaffold in progress — see /specs for the roadmap."
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "studies": "Estudios",
+    "experience": "Experiencia",
+    "skills": "Habilidades",
+    "about": "Sobre mí",
+    "contact": "Contacto",
+    "languageSwitcher": "Seleccionar idioma",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "footer": {
+    "copyright": "© {year} Bruno Morales. Todos los derechos reservados.",
+    "viewSource": "Ver código en GitHub"
+  },
+  "home": {
+    "title": "myself",
+    "subtitle": "Prueba de tema",
+    "body": "Estructura en progreso — ver /specs para la hoja de ruta."
+  }
+}

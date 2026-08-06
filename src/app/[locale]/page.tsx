@@ -1,15 +1,16 @@
+import { useTranslations } from "next-intl";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 export default function Home() {
+  const t = useTranslations("home");
+
   return (
-    <Stack component="main" spacing={3} sx={{ p: 4 }}>
-      <Typography variant="h1">myself</Typography>
-      <Typography variant="h4">Theme smoke test</Typography>
-      <Typography variant="body1">
-        Scaffold in progress — see /specs for the roadmap.
-      </Typography>
+    <Stack spacing={3}>
+      <Typography variant="h1">{t("title")}</Typography>
+      <Typography variant="h4">{t("subtitle")}</Typography>
+      <Typography variant="body1">{t("body")}</Typography>
       <Stack direction="row" spacing={2}>
         <Button variant="contained" color="primary">
           Primary
