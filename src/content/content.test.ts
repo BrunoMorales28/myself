@@ -10,9 +10,25 @@ function expectLocalized(value: LocalizedText, label: string) {
   }
 }
 
+function expectUniqueIds(ids: string[], label: string) {
+  ids.forEach((id) => {
+    if (id.trim() === "") {
+      throw new Error(`${label} has an empty id`);
+    }
+  });
+  expect(new Set(ids).size).toBe(ids.length);
+}
+
 describe("experience", () => {
   it("has at least one entry", () => {
     expect(experience.length).toBeGreaterThan(0);
+  });
+
+  it("has unique, non-empty ids", () => {
+    expectUniqueIds(
+      experience.map((entry) => entry.id),
+      "experience",
+    );
   });
 
   it.each(experience)("$company has fully localized text", (entry) => {
@@ -27,6 +43,13 @@ describe("experience", () => {
 describe("studies", () => {
   it("has at least one entry", () => {
     expect(studies.length).toBeGreaterThan(0);
+  });
+
+  it("has unique, non-empty ids", () => {
+    expectUniqueIds(
+      studies.map((entry) => entry.id),
+      "studies",
+    );
   });
 
   it.each(studies)("$institution has fully localized text", (entry) => {
@@ -51,8 +74,16 @@ describe("skills", () => {
 describe("about", () => {
   it("has fully localized bio and hobbies", () => {
     expectLocalized(about.bio, "about.bio");
-    about.hobbies.forEach((hobby, i) =>
-      expectLocalized(hobby, `about.hobbies[${i}]`),
+    about.hobbies.forEach((hobby, i) => {
+      expectLocalized(hobby.label, `about.hobbies[${i}].label`);
+      expectLocalized(hobby.description, `about.hobbies[${i}].description`);
+    });
+  });
+
+  it("has unique, non-empty hobby ids", () => {
+    expectUniqueIds(
+      about.hobbies.map((hobby) => hobby.id),
+      "about.hobbies",
     );
   });
 });

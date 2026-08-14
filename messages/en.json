@@ -14,9 +14,20 @@
     "copyright": "© {year} Bruno Morales. All rights reserved.",
     "viewSource": "View source on GitHub"
   },
-  "home": {
-    "title": "myself",
-    "subtitle": "Theme smoke test",
-    "body": "Scaffold in progress — see /specs for the roadmap."
+  "landing": {
+    "heroTitle": "Bruno Morales — Web Developer",
+    "heroIntro": "This site is Bruno's résumé and portfolio — a working example of the frontend craft described below, built end to end and open source.",
+    "downloadCv": "Download CV",
+    "contact": "Contact",
+    "experienceTitle": "Experience",
+    "experienceLogoAlt": "{company} logo",
+    "experienceViewAll": "View all experience",
+    "studiesTitle": "Studies",
+    "studiesLogoAlt": "{institution} logo",
+    "hobbiesTitle": "Hobbies",
+    "skillsTitle": "Skills",
+    "skillsTeaser": "{first} and {second}, among others.",
+    "contactTeaserTitle": "Contact",
+    "contactTeaser": "Have a project in mind, or just want to say hi? Get in touch."
   }
 }

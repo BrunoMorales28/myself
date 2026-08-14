@@ -1,27 +1,111 @@
-import { useTranslations } from "next-intl";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import { useTranslations, useLocale } from "next-intl";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import {
+  experience,
+  studies,
+  skills,
+  about,
+  getLocalizedText,
+  hobbyIcons,
+} from "@/content";
+import { getInitials } from "@/lib/initials";
+import { Hero } from "@/components/landing/Hero";
+import { ItemListSection } from "@/components/landing/ItemListSection";
+import { FeaturedSectionCard } from "@/components/landing/FeaturedSectionCard";
+
+const EXPERIENCE_LIMIT = 4;
 
 export default function Home() {
-  const t = useTranslations("home");
+  const locale = useLocale() as "en" | "es";
+  const t = useTranslations("landing");
+
+  const experienceItems = experience
+    .filter((entry) => entry.section === "professional")
+    .slice(0, EXPERIENCE_LIMIT)
+    .map((entry) => ({
+      id: entry.id,
+      title: getLocalizedText(entry.role, locale),
+      href: `/experience?highlight=${entry.id}`,
+      avatar: (
+        <Avatar
+          src={entry.logoUrl}
+          alt={t("experienceLogoAlt", { company: entry.company })}
+        >
+          {getInitials(entry.company)}
+        </Avatar>
+      ),
+    }));
+
+  const studiesItems = studies.map((entry) => ({
+    id: entry.id,
+    title: getLocalizedText(entry.degree, locale),
+    href: `/studies?highlight=${entry.id}`,
+    avatar: (
+      <Avatar
+        src={entry.logoUrl}
+        alt={t("studiesLogoAlt", { institution: entry.institution })}
+      >
+        {getInitials(entry.institution)}
+      </Avatar>
+    ),
+  }));
+
+  const hobbyItems = about.hobbies.map((hobby) => {
+    const HobbyIcon = hobbyIcons[hobby.icon];
+    return {
+      id: hobby.id,
+      title: getLocalizedText(hobby.label, locale),
+      href: `/about?highlight=${hobby.id}`,
+      avatar: (
+        <Avatar>
+          <HobbyIcon fontSize="small" />
+        </Avatar>
+      ),
+    };
+  });
+
+  const [firstSkillCategory, secondSkillCategory] = skills;
 
   return (
-    <Stack spacing={3}>
-      <Typography variant="h1">{t("title")}</Typography>
-      <Typography variant="h4">{t("subtitle")}</Typography>
-      <Typography variant="body1">{t("body")}</Typography>
-      <Stack direction="row" spacing={2}>
-        <Button variant="contained" color="primary">
-          Primary
-        </Button>
-        <Button variant="contained" color="secondary">
-          Secondary
-        </Button>
-        <Button variant="outlined" color="primary">
-          Outlined
-        </Button>
-      </Stack>
-    </Stack>
+    <Box>
+      <Hero
+        title={t("heroTitle")}
+        intro={t("heroIntro")}
+        downloadCvLabel={t("downloadCv")}
+        downloadCvHref="/cv.pdf"
+        contactLabel={t("contact")}
+        contactHref="/contact"
+      />
+
+      <ItemListSection
+        title={t("experienceTitle")}
+        items={experienceItems}
+        viewAllHref="/experience"
+        viewAllLabel={t("experienceViewAll")}
+      />
+
+      <ItemListSection title={t("studiesTitle")} items={studiesItems} />
+
+      <ItemListSection title={t("hobbiesTitle")} items={hobbyItems} />
+
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, py: 2 }}>
+        {firstSkillCategory && secondSkillCategory && (
+          <FeaturedSectionCard
+            title={t("skillsTitle")}
+            description={t("skillsTeaser", {
+              first: getLocalizedText(firstSkillCategory.category, locale),
+              second: getLocalizedText(secondSkillCategory.category, locale),
+            })}
+            href="/skills"
+          />
+        )}
+        <FeaturedSectionCard
+          title={t("contactTeaserTitle")}
+          description={t("contactTeaser")}
+          href="/contact"
+        />
+      </Box>
+    </Box>
   );
 }

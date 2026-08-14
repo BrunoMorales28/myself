@@ -1,6 +1,6 @@
 # 07 — Landing Page
 
-Status: Draft
+Status: Implemented
 Depends on: [05-base-layout](./05-base-layout.md), [06-content-data-model](./06-content-data-model.md)
 
 ## Goal
@@ -59,6 +59,17 @@ Spec 06 shipped without the fields this page needs. These are additive-only (no 
 7. Hobby icons are MUI icons (not photos/logos, since hobbies aren't organizations) chosen per hobby and mapped via a lookup table in `src/content/index.ts`.
 8. Featured/listing layout uses flexbox (`Box`/`Stack` + `sx`), not MUI's `Grid` component.
 9. Experience listing on landing is capped to the 4 most recent professional entries (two rows of two cards) + a "View all" link; Studies/Hobbies show all entries (short lists, no cap needed).
+
+## Implementation notes (deviations from plan)
+
+- **Logo fallback uses MUI `Avatar`'s built-in behavior, not `next/image` + manual `aria-label`**: MUI's `Avatar` already renders `children` automatically when its `src` image fails to load, and the fallback's accessible name comes from the visible initials text itself (no separate `aria-label` needed). This covers the same requirement as originally planned with less code — `next/image` was dropped in favor of `Avatar`'s plain `<img src>`.
+- **`ItemListSection` takes a generic `avatar: ReactNode` per item, not `logoUrl`/`icon` fields**: the page (`page.tsx`) composes the right `Avatar` (image+initials for Experience/Studies, MUI icon for Hobbies) and passes the finished node down. Keeps `ItemListSection` reusable for both patterns without an internal "is this a logo or an icon" branch.
+- **`Hero`/`ItemListSection`/`FeaturedSectionCard` take already-translated strings as props** rather than calling `useTranslations` internally — `page.tsx` (Server Component) resolves all copy via `useTranslations`/`getLocalizedText` and passes plain strings down. Keeps these components trivially testable in Jest/RTL and Storybook without needing message files wired into every test.
+- **`src/i18n/navigation.ts` now starts with `"use client"`**: without it, passing next-intl's `Link` as `component={Link}` from a Server Component (`Hero`, `ItemListSection`, `FeaturedSectionCard`) into an MUI Client Component (`Button`, `CardActionArea`) crashed at runtime with an RSC serialization error ("Functions cannot be passed directly to Client Components"). `Header.tsx` never hit this because it's already `"use client"` itself. `pnpm build` alone didn't catch it, because `/[locale]` is a dynamic route (not statically prerendered) — the crash only surfaced when the page was actually requested (caught via `pnpm test:e2e`).
+- **`.storybook/preview.tsx` now wraps every story in `NextIntlClientProvider`** (with `messages/en.json`): needed because `ItemListSection`/`Hero`/`FeaturedSectionCard` render next-intl's `Link` internally. Benefits any future story for a component that touches `next-intl`.
+- **Hero's `h1` needed a responsive `fontSize` override**: MUI's default `h1` size overflowed on a 400px-wide viewport (a mobile screenshot check caught this — not something the automated test suite would have flagged). Fixed with `fontSize: { xs: "2.25rem", sm: "3rem", md: "3.75rem" }`.
+- **CV download button points at `/cv.pdf`** (a static, non-locale-prefixed asset path) as a placeholder target — spec 12 (CV PDF generation) still needs to confirm/fulfill this exact route.
+- **Hobby descriptions are draft copy** written during implementation to satisfy the content model/tests — Bruno should personalize the wording in `src/content/about.ts` before shipping.
 
 ## Verification
 

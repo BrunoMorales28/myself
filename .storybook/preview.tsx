@@ -1,7 +1,9 @@
 import type { Preview } from "@storybook/nextjs-vite";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { NextIntlClientProvider } from "next-intl";
 import { theme } from "../src/lib/theme";
+import messages from "../messages/en.json";
 
 const preview: Preview = {
   parameters: {
@@ -21,10 +23,12 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Story />
-      </ThemeProvider>
+      <NextIntlClientProvider locale="en" messages={messages}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Story />
+        </ThemeProvider>
+      </NextIntlClientProvider>
     ),
   ],
 };

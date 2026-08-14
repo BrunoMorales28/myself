@@ -14,9 +14,20 @@
     "copyright": "© {year} Bruno Morales. Todos los derechos reservados.",
     "viewSource": "Ver código en GitHub"
   },
-  "home": {
-    "title": "myself",
-    "subtitle": "Prueba de tema",
-    "body": "Estructura en progreso — ver /specs para la hoja de ruta."
+  "landing": {
+    "heroTitle": "Bruno Morales — Web Developer",
+    "heroIntro": "Este sitio es el CV y portfolio de Bruno — un ejemplo funcional del trabajo frontend descripto abajo, construido de punta a punta y de código abierto.",
+    "downloadCv": "Descargar CV",
+    "contact": "Contacto",
+    "experienceTitle": "Experiencia",
+    "experienceLogoAlt": "Logo de {company}",
+    "experienceViewAll": "Ver toda la experiencia",
+    "studiesTitle": "Estudios",
+    "studiesLogoAlt": "Logo de {institution}",
+    "hobbiesTitle": "Hobbies",
+    "skillsTitle": "Habilidades",
+    "skillsTeaser": "{first} y {second}, entre otras.",
+    "contactTeaserTitle": "Contacto",
+    "contactTeaser": "¿Tenés un proyecto en mente, o solo querés saludar? Escribime."
   }
 }

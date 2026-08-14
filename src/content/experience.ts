@@ -2,7 +2,9 @@ import type { ExperienceEntry } from "./types";
 
 export const experience: ExperienceEntry[] = [
   {
+    id: "globant-sportian",
     company: "Globant (client: Sportian)",
+    logoUrl: "/logos/globant.svg",
     role: { en: "React.js Developer", es: "Desarrollador React.js" },
     startDate: "2025-11",
     endDate: "2026-06",
@@ -28,7 +30,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["React", "TypeScript", "AI-assisted development"],
   },
   {
+    id: "ypf-y-tracker",
     company: "YPF (Y-Tracker)",
+    logoUrl: "/logos/ypf.svg",
     role: { en: "React.js Developer", es: "Desarrollador React.js" },
     startDate: "2025-06",
     endDate: "2025-11",
@@ -54,7 +58,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["React", "TypeScript", "SignalR", "Real-time data"],
   },
   {
+    id: "hootsuite",
     company: "Hootsuite",
+    logoUrl: "/logos/hootsuite.svg",
     role: { en: "React.js Developer", es: "Desarrollador React.js" },
     startDate: "2023-11",
     endDate: "2025-06",
@@ -88,7 +94,9 @@ export const experience: ExperienceEntry[] = [
     ],
   },
   {
+    id: "nerdwallet",
     company: "Nerdwallet",
+    logoUrl: "/logos/nerdwallet.svg",
     role: { en: "React.js Developer", es: "Desarrollador React.js" },
     startDate: "2021-10",
     endDate: "2023-02",
@@ -110,7 +118,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["React", "TypeScript", "Unit testing"],
   },
   {
+    id: "mercado-libre",
     company: "Mercado Libre",
+    logoUrl: "/logos/mercado-libre.svg",
     role: { en: "Front End Web Developer", es: "Desarrollador Web Front End" },
     startDate: "2020-12",
     endDate: "2021-09",
@@ -132,7 +142,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["React", "Unit testing"],
   },
   {
+    id: "santander-tecnologia",
     company: "Santander Tecnología",
+    logoUrl: "/logos/santander.svg",
     role: { en: "Frontend Web Developer", es: "Desarrollador Web Frontend" },
     startDate: "2020-09",
     endDate: "2020-12",
@@ -150,7 +162,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["React"],
   },
   {
+    id: "iunigo",
     company: "Iúnigo",
+    logoUrl: "/logos/iunigo.svg",
     role: { en: "Frontend Web Developer", es: "Desarrollador Web Frontend" },
     startDate: "2019-05",
     endDate: "2020-09",
@@ -191,7 +205,9 @@ export const experience: ExperienceEntry[] = [
     ],
   },
   {
+    id: "iguanafix",
     company: "IguanaFix",
+    logoUrl: "/logos/iguanafix.svg",
     role: { en: "Front End Developer", es: "Desarrollador Front End" },
     startDate: "2018-11",
     endDate: "2019-04",
@@ -213,7 +229,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["JavaScript", "React", "Node.js", "Bootstrap"],
   },
   {
+    id: "accenture",
     company: "Accenture",
+    logoUrl: "/logos/accenture.svg",
     role: { en: "Java Developer", es: "Desarrollador Java" },
     startDate: "2017-06",
     endDate: "2018-11",
@@ -243,7 +261,9 @@ export const experience: ExperienceEntry[] = [
     ],
   },
   {
+    id: "indra",
     company: "Indra",
+    logoUrl: "/logos/indra.svg",
     role: { en: "Tester", es: "Tester" },
     startDate: "2016-08",
     endDate: "2017-05",
@@ -265,7 +285,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["PL/SQL", "Java", "Manual testing"],
   },
   {
+    id: "zys-factors",
     company: "ZyS Factors S.A.",
+    logoUrl: "/logos/zys-factors.svg",
     role: {
       en: "Internal Technical Assistant",
       es: "Asistente Técnico Interno",
@@ -290,7 +312,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["IT support"],
   },
   {
+    id: "centerplate",
     company: "Centerplate",
+    logoUrl: "/logos/centerplate.svg",
     role: {
       en: "General Resort Worker (Work & Travel)",
       es: "Trabajador General de Resort (Work & Travel)",
@@ -315,7 +339,9 @@ export const experience: ExperienceEntry[] = [
     tags: ["Customer service"],
   },
   {
+    id: "focus",
     company: "Focus",
+    logoUrl: "/logos/focus.svg",
     role: { en: "Digital Illustrator", es: "Dibujante Digital" },
     startDate: "2014-09",
     endDate: "2014-11",
