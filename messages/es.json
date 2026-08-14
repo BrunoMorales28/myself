@@ -29,5 +29,10 @@
     "skillsTeaser": "{first} y {second}, entre otras.",
     "contactTeaserTitle": "Contacto",
     "contactTeaser": "¿Tenés un proyecto en mente, o solo querés saludar? Escribime."
+  },
+  "studies": {
+    "heading": "Estudios",
+    "logoAlt": "Logo de {institution}",
+    "present": "Presente"
   }
 }

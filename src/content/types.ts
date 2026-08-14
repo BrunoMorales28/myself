@@ -23,7 +23,7 @@ export type StudyEntry = {
   degree: LocalizedText;
   startDate: string; // YYYY-MM
   endDate: string | null;
-  description?: LocalizedText;
+  description: LocalizedText;
 };
 
 export type SkillCategory = {

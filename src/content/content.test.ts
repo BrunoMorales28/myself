@@ -54,9 +54,7 @@ describe("studies", () => {
 
   it.each(studies)("$institution has fully localized text", (entry) => {
     expectLocalized(entry.degree, `${entry.institution}.degree`);
-    if (entry.description) {
-      expectLocalized(entry.description, `${entry.institution}.description`);
-    }
+    expectLocalized(entry.description, `${entry.institution}.description`);
   });
 });
 

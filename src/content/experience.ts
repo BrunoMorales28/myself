@@ -32,7 +32,7 @@ export const experience: ExperienceEntry[] = [
   {
     id: "ypf-y-tracker",
     company: "YPF (Y-Tracker)",
-    logoUrl: "/logos/ypf.svg",
+    logoUrl: "/logos/ypf.png",
     role: { en: "React.js Developer", es: "Desarrollador React.js" },
     startDate: "2025-06",
     endDate: "2025-11",
