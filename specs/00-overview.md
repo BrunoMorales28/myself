@@ -43,6 +43,8 @@ Landing, Studies, Work Experience, Skills/Tech Stack, About Me (hobbies, persona
 
 Spec-driven. This document is the standing reference for the whole project and gets updated as scope evolves. Actual implementation happens through small numbered sub-specs (`specs/01-*.md`, `specs/02-*.md`, ...), each scoped to be reviewable in one sitting, each approved by Bruno before its code is written. Where a feature is too big for one sub-spec, it's split into several rather than written as one large document. Sub-specs include a "Backend concepts" section whenever they touch backend/infra territory that's new to Bruno.
 
+Every sub-spec that introduces UI must call out accessibility/semantics decisions explicitly (heading hierarchy, ARIA labeling for grouped/non-obvious content, keyboard operability, and a contrast check for any non-default-contrast styling) rather than leaving them as an implicit "follow the pattern" assumption — spelled out in Scope/Decisions/Verification, not just inherited silently from an earlier spec. Starting with spec 09.
+
 Bruno handles all git operations (commits, pushes, PRs) himself.
 
 ## Sub-spec roadmap
@@ -56,20 +58,21 @@ Bruno handles all git operations (commits, pushes, PRs) himself.
 7. Landing page
 8. Studies page
 9. Work experience page
-10. Skills/tech stack page
-11. About me page
-12. CV PDF generation
-13. Contact form UI
-14. Contact backend (Postgres + API route)
-15. Contact notifications (Resend + Twilio WhatsApp)
-16. Agent core (Claude API + chat UI, no tools)
-17. Agent tool: CV search
-18. Agent tool: PDF download trigger
-19. Agent tool: contact form submission
-20. Agent tool: site navigation
-21. Accessibility audit pass
-22. i18n completeness pass
-23. Deployment & analytics
+10. Accessibility & semantics audit — pass 1 (interim audit of specs 1–9: layout, landing, studies, experience; catches drift early instead of only at the end)
+11. Skills/tech stack page
+12. About me page
+13. CV PDF generation
+14. Contact form UI
+15. Contact backend (Postgres + API route)
+16. Contact notifications (Resend + Twilio WhatsApp)
+17. Agent core (Claude API + chat UI, no tools)
+18. Agent tool: CV search
+19. Agent tool: PDF download trigger
+20. Agent tool: contact form submission
+21. Agent tool: site navigation
+22. Accessibility audit pass — pass 2 (full site, final)
+23. i18n completeness pass
+24. Deployment & analytics
 
 Numbering/order may shift as we learn more; this list is the current best plan, not a contract.
 

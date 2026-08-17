@@ -34,5 +34,13 @@
     "heading": "Estudios",
     "logoAlt": "Logo de {institution}",
     "present": "Presente"
+  },
+  "experience": {
+    "heading": "Experiencia",
+    "professionalHeading": "Experiencia Profesional",
+    "earlyHeading": "Otras experiencias",
+    "logoAlt": "Logo de {company}",
+    "present": "Presente",
+    "tagsGroupLabel": "Tecnologías utilizadas"
   }
 }
