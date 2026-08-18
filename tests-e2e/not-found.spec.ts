@@ -50,6 +50,7 @@ for (const locale of ["en", "es"] as const) {
     page,
   }) => {
     await page.goto(`/${locale}/nonexistent`);
+    await page.getByRole("heading", { level: 1 }).waitFor();
     const results = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
       .analyze();

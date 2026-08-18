@@ -73,7 +73,7 @@ export default function Home() {
         title={t("heroTitle")}
         intro={t("heroIntro")}
         downloadCvLabel={t("downloadCv")}
-        downloadCvHref="/cv.pdf"
+        downloadCvHref={`/${locale}/cv.pdf`}
         contactLabel={t("contact")}
         contactHref="/contact"
       />

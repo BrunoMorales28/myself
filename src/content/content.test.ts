@@ -1,4 +1,11 @@
-import { experience, studies, skills, about, getLocalizedText } from "./index";
+import {
+  experience,
+  studies,
+  skills,
+  about,
+  contact,
+  getLocalizedText,
+} from "./index";
 import type { LocalizedText } from "./types";
 
 function expectLocalized(value: LocalizedText, label: string) {
@@ -83,6 +90,14 @@ describe("about", () => {
       about.hobbies.map((hobby) => hobby.id),
       "about.hobbies",
     );
+  });
+});
+
+describe("contact", () => {
+  it("has non-empty email, LinkedIn, and GitHub URLs", () => {
+    expect(contact.email.trim()).not.toBe("");
+    expect(contact.linkedinUrl.trim()).not.toBe("");
+    expect(contact.githubUrl.trim()).not.toBe("");
   });
 });
 

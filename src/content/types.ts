@@ -44,3 +44,9 @@ export type AboutContent = {
   bio: LocalizedText;
   hobbies: Hobby[];
 };
+
+export type ContactInfo = {
+  email: string;
+  linkedinUrl: string;
+  githubUrl: string;
+};

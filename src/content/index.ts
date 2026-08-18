@@ -8,6 +8,7 @@ export { experience } from "./experience";
 export { studies } from "./studies";
 export { skills } from "./skills";
 export { about } from "./about";
+export { contact } from "./contact";
 export type {
   LocalizedText,
   ExperienceEntry,
@@ -16,6 +17,7 @@ export type {
   Hobby,
   HobbyIconKey,
   AboutContent,
+  ContactInfo,
 } from "./types";
 
 export function getLocalizedText(
