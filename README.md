@@ -28,6 +28,24 @@ Next.js (App Router) · TypeScript · Material UI · Playwright · Storybook · 
 
 API mocking for tests uses [MSW](https://mswjs.io) — handlers live in `src/mocks/handlers.ts` and are shared between Jest and Storybook.
 
+## Environment variables & database
+
+Copy `.env.example` to `.env.local` and fill in real values (never commit `.env.local`). The contact form (spec 16) needs `POSTGRES_URL`, pointing at a Neon database linked via Vercel's **Storage** tab ("Vercel Postgres" is now a native Neon integration, not a separate product):
+
+```bash
+pnpm dlx vercel link              # first time only, links this folder to the Vercel project
+pnpm dlx vercel env pull .env.local
+```
+
+If a var was added manually in the dashboard rather than pulled, paste it into `.env.local` directly.
+
+| Command            | Runs                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| `pnpm db:generate` | Generates a Drizzle migration from `src/lib/db/schema.ts`    |
+| `pnpm db:migrate`  | Applies pending migrations to the database in `POSTGRES_URL` |
+
+`drizzle-kit` is a standalone CLI — unlike Next.js, it does **not** read `.env.local` automatically. `drizzle.config.ts` loads it explicitly via `dotenv`, so these commands only need `.env.local` to exist with a valid `POSTGRES_URL`, no extra flags.
+
 ## Project source of truth
 
 This project is built spec-first: every feature is designed in [`/specs`](./specs) and approved before it's implemented. Start with [`specs/00-overview.md`](./specs/00-overview.md) for the full plan, stack decisions, and roadmap.

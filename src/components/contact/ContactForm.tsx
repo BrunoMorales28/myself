@@ -3,6 +3,11 @@
 import { useRef, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import {
+  nameFieldSchema,
+  emailFieldSchema,
+  messageFieldSchema,
+} from "@/lib/contactValidation";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
@@ -58,13 +63,15 @@ export function ContactForm({ labels }: ContactFormProps) {
   const messageRef = useRef<HTMLInputElement>(null);
   const fieldRefs = { name: nameRef, email: emailRef, message: messageRef };
 
+  // Reuses the shared schema's field types/rules (trim, email format) and
+  // layers localized error messages on top, rather than redefining the
+  // validation shape here too.
   const validationSchema = Yup.object({
-    name: Yup.string().trim().required(labels.nameRequired),
-    email: Yup.string()
-      .trim()
-      .email(labels.emailInvalid)
-      .required(labels.emailRequired),
-    message: Yup.string().trim().required(labels.messageRequired),
+    name: nameFieldSchema.required(labels.nameRequired),
+    email: emailFieldSchema
+      .required(labels.emailRequired)
+      .email(labels.emailInvalid),
+    message: messageFieldSchema.required(labels.messageRequired),
     website: Yup.string(),
   });
 
