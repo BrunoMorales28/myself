@@ -58,3 +58,197 @@ Husky enforces quality gates automatically (installed via `pnpm install`, no ext
 - **pre-push** — runs `typecheck`, `test`, and `build` in full. Slower, but only runs when code is about to leave your machine. A failure here blocks the push.
 
 Bypassing either hook (`git commit --no-verify` / `git push --no-verify`) should be rare — only for genuine emergencies, since it skips the checks that keep `main` in a working state.
+
+## Project structure
+
+A full snapshot of every tracked file and folder, kept current automatically: `scripts/update-readme-tree.mjs` regenerates it from `git ls-files` (so it always matches `.gitignore`), and a Claude Code hook runs that script after every new file is created. Don't hand-edit the tree below — it's overwritten on the next regeneration.
+
+<!-- PROJECT-TREE:START -->
+
+```
+myself/
+├── .claude/
+│   └── settings.json
+├── .husky/
+│   ├── pre-commit
+│   └── pre-push
+├── .storybook/
+│   ├── main.ts
+│   └── preview.tsx
+├── drizzle/
+│   ├── meta/
+│   │   ├── _journal.json
+│   │   └── 0000_snapshot.json
+│   └── 0000_organic_human_robot.sql
+├── messages/
+│   ├── en.json
+│   └── es.json
+├── public/
+│   └── logos/
+│       ├── accenture.svg
+│       ├── centerplate.svg
+│       ├── digital-house.svg
+│       ├── focus.svg
+│       ├── globant.svg
+│       ├── hootsuite.svg
+│       ├── iguanafix.svg
+│       ├── indra.svg
+│       ├── iunigo.svg
+│       ├── mercado-libre.svg
+│       ├── nerdwallet.svg
+│       ├── ort.svg
+│       ├── santander.svg
+│       ├── ypf.png
+│       └── zys-factors.svg
+├── scripts/
+│   └── update-readme-tree.mjs
+├── specs/
+│   ├── 00-overview.md
+│   ├── 01-project-scaffold.md
+│   ├── 02-tooling-lint-hooks.md
+│   ├── 03-tooling-test-stack.md
+│   ├── 04-theme-design-tokens.md
+│   ├── 05-base-layout.md
+│   ├── 06-content-data-model.md
+│   ├── 07-landing-page.md
+│   ├── 08-studies-page.md
+│   ├── 09-experience-page.md
+│   ├── 10-accessibility-audit-pass-1.md
+│   ├── 11-skills-page.md
+│   ├── 12-about-page.md
+│   ├── 13-support-views.md
+│   ├── 14-cv-pdf-generation.md
+│   ├── 15-contact-form-ui.md
+│   └── 16-contact-backend.md
+├── src/
+│   ├── app/
+│   │   ├── [locale]/
+│   │   │   ├── [...rest]/
+│   │   │   │   └── page.tsx
+│   │   │   ├── about/
+│   │   │   │   └── page.tsx
+│   │   │   ├── contact/
+│   │   │   │   └── page.tsx
+│   │   │   ├── cv.pdf/
+│   │   │   │   └── route.tsx
+│   │   │   ├── experience/
+│   │   │   │   └── page.tsx
+│   │   │   ├── studies/
+│   │   │   │   └── page.tsx
+│   │   │   ├── error.tsx
+│   │   │   ├── layout.tsx
+│   │   │   ├── not-found.tsx
+│   │   │   └── page.tsx
+│   │   ├── api/
+│   │   │   └── contact/
+│   │   │       ├── route.test.ts
+│   │   │       └── route.ts
+│   │   ├── global-error.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   └── not-found.tsx
+│   ├── components/
+│   │   ├── about/
+│   │   │   ├── HobbiesList.test.tsx
+│   │   │   ├── HobbiesList.tsx
+│   │   │   ├── HobbyCard.stories.tsx
+│   │   │   ├── HobbyCard.test.tsx
+│   │   │   └── HobbyCard.tsx
+│   │   ├── contact/
+│   │   │   ├── ContactForm.stories.tsx
+│   │   │   ├── ContactForm.test.tsx
+│   │   │   └── ContactForm.tsx
+│   │   ├── experience/
+│   │   │   ├── ExperienceCard.stories.tsx
+│   │   │   ├── ExperienceCard.test.tsx
+│   │   │   ├── ExperienceCard.tsx
+│   │   │   ├── ExperienceList.test.tsx
+│   │   │   └── ExperienceList.tsx
+│   │   ├── landing/
+│   │   │   ├── FeaturedSectionCard.stories.tsx
+│   │   │   ├── FeaturedSectionCard.test.tsx
+│   │   │   ├── FeaturedSectionCard.tsx
+│   │   │   ├── Hero.stories.tsx
+│   │   │   ├── Hero.test.tsx
+│   │   │   ├── Hero.tsx
+│   │   │   ├── ItemListSection.stories.tsx
+│   │   │   ├── ItemListSection.test.tsx
+│   │   │   └── ItemListSection.tsx
+│   │   ├── layout/
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Header.tsx
+│   │   │   ├── LanguageSwitcher.tsx
+│   │   │   └── PageShell.tsx
+│   │   ├── skills/
+│   │   │   ├── SkillCategorySection.stories.tsx
+│   │   │   ├── SkillCategorySection.test.tsx
+│   │   │   └── SkillCategorySection.tsx
+│   │   ├── studies/
+│   │   │   ├── StudiesList.test.tsx
+│   │   │   ├── StudiesList.tsx
+│   │   │   ├── StudyCard.stories.tsx
+│   │   │   ├── StudyCard.test.tsx
+│   │   │   └── StudyCard.tsx
+│   │   ├── Greeting.stories.tsx
+│   │   ├── Greeting.test.tsx
+│   │   ├── Greeting.tsx
+│   │   └── ThemeRegistry.tsx
+│   ├── content/
+│   │   ├── about.ts
+│   │   ├── contact.ts
+│   │   ├── content.test.ts
+│   │   ├── experience.ts
+│   │   ├── index.ts
+│   │   ├── skills.ts
+│   │   ├── studies.ts
+│   │   └── types.ts
+│   ├── i18n/
+│   │   ├── navigation.ts
+│   │   ├── request.ts
+│   │   └── routing.ts
+│   ├── lib/
+│   │   ├── db/
+│   │   │   ├── client.ts
+│   │   │   └── schema.ts
+│   │   ├── pdf/
+│   │   │   └── CvDocument.tsx
+│   │   ├── contactValidation.ts
+│   │   ├── dateRange.ts
+│   │   ├── initials.test.ts
+│   │   ├── initials.ts
+│   │   └── theme.ts
+│   ├── mocks/
+│   │   ├── browser.ts
+│   │   ├── handlers.ts
+│   │   └── server.ts
+│   └── proxy.ts
+├── tests-e2e/
+│   ├── about.spec.ts
+│   ├── contact.spec.ts
+│   ├── cv-pdf.spec.ts
+│   ├── experience.spec.ts
+│   ├── landing.spec.ts
+│   ├── not-found.spec.ts
+│   └── studies.spec.ts
+├── .env.example
+├── .gitattributes
+├── .gitignore
+├── .prettierignore
+├── .prettierrc.json
+├── drizzle.config.ts
+├── eslint.config.mjs
+├── jest.config.ts
+├── jest.polyfills.js
+├── jest.setup.ts
+├── next.config.ts
+├── package.json
+├── playwright.config.ts
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── README.md
+├── tsconfig.json
+├── vitest.config.ts
+└── vitest.shims.d.ts
+```
+
+<!-- PROJECT-TREE:END -->
