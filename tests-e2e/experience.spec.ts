@@ -62,6 +62,35 @@ test("clicking and keyboard toggling expand/collapse a card", async ({
   await expect(button).toHaveAttribute("aria-expanded", "true");
 });
 
+test("skills section renders as a group of categories after the experience lists", async ({
+  page,
+}) => {
+  await page.goto("/en/experience");
+
+  await expect(
+    page.getByRole("heading", { name: "Skills", level: 2 }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Frontend Core", level: 3 }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("group", { name: "Frontend Core skills" }),
+  ).toBeVisible();
+  await expect(page.getByText("React.js", { exact: true })).toBeVisible();
+});
+
+test("skills nav link jumps to the skills section", async ({ page }) => {
+  await page.goto("/en");
+  await page
+    .getByRole("navigation", { name: "Main navigation" })
+    .getByRole("link", { name: "Skills", exact: true })
+    .click();
+  await expect(page).toHaveURL(/\/en\/experience#skills$/);
+  await expect(
+    page.getByRole("heading", { name: "Skills", level: 2 }),
+  ).toBeInViewport();
+});
+
 for (const locale of ["en", "es"] as const) {
   test(`experience page (${locale}) has no accessibility violations`, async ({
     page,

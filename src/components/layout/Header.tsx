@@ -26,6 +26,10 @@ const navKeys = [
   "contact",
 ] as const;
 
+function navHref(key: (typeof navKeys)[number]) {
+  return key === "skills" ? "/experience#skills" : `/${key}`;
+}
+
 export function Header() {
   const t = useTranslations("nav");
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -54,7 +58,7 @@ export function Header() {
             spacing={1}
           >
             {navKeys.map((key) => (
-              <Button key={key} component={Link} href={`/${key}`}>
+              <Button key={key} component={Link} href={navHref(key)}>
                 {t(key)}
               </Button>
             ))}
@@ -84,7 +88,7 @@ export function Header() {
                 <ListItem key={key} disablePadding>
                   <ListItemButton
                     component={Link}
-                    href={`/${key}`}
+                    href={navHref(key)}
                     onClick={() => setDrawerOpen(false)}
                   >
                     <ListItemText primary={t(key)} />

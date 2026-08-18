@@ -1,11 +1,13 @@
 import { getTranslations, getLocale } from "next-intl/server";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { experience, getLocalizedText } from "@/content";
+import { experience, skills, getLocalizedText } from "@/content";
 import { formatDateRange } from "@/lib/dateRange";
 import {
   ExperienceList,
   type ExperienceListEntry,
 } from "@/components/experience/ExperienceList";
+import { SkillCategorySection } from "@/components/skills/SkillCategorySection";
 
 type ExperiencePageProps = {
   searchParams: Promise<{ highlight?: string }>;
@@ -16,6 +18,7 @@ export default async function ExperiencePage({
 }: ExperiencePageProps) {
   const locale = (await getLocale()) as "en" | "es";
   const t = await getTranslations("experience");
+  const tSkills = await getTranslations("skills");
   const { highlight } = await searchParams;
 
   const toListEntry = (
@@ -65,6 +68,25 @@ export default async function ExperiencePage({
         tagsGroupLabel={t("tagsGroupLabel")}
         highlight={highlight}
       />
+
+      <Box component="section" id="skills" sx={{ mt: 4 }}>
+        <Typography variant="h2" sx={{ mb: 2 }}>
+          {tSkills("heading")}
+        </Typography>
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 3 }}>
+          {skills.map((skillCategory) => {
+            const category = getLocalizedText(skillCategory.category, locale);
+            return (
+              <SkillCategorySection
+                key={skillCategory.category.en}
+                category={category}
+                items={skillCategory.items}
+                itemsGroupLabel={tSkills("categoryItemsLabel", { category })}
+              />
+            );
+          })}
+        </Box>
+      </Box>
     </>
   );
 }

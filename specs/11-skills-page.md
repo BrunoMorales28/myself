@@ -1,62 +1,63 @@
-# 11 — Skills Page
+# 11 — Skills Section (within the Experience page)
 
-Status: Approved
-Depends on: [05-base-layout](./05-base-layout.md), [06-content-data-model](./06-content-data-model.md), [07-landing-page](./07-landing-page.md)
+Status: Implemented
+Depends on: [05-base-layout](./05-base-layout.md), [06-content-data-model](./06-content-data-model.md), [07-landing-page](./07-landing-page.md), [09-experience-page](./09-experience-page.md)
+
+## Revision note
+
+This spec originally shipped as a standalone `/skills` page (v1): a flowing single-column list of category headings + chip rows. After seeing it rendered, Bruno found it visually too sparse — a single-column list of short chip rows in a 1200px-wide container leaves a lot of empty horizontal space, and as the _entire_ content of its own page, that emptiness dominated the experience.
+
+After weighing three directions (redensify the standalone page, fold into the Experience page, promote to a full landing-page section), Bruno chose to fold Skills into the Experience page as a closing section. This document has been rewritten to describe that shipped design; v1's standalone-page approach is preserved here in this note for the record, but everything below describes v2, the current implementation.
 
 ## Goal
 
-Build `/[locale]/skills`: a full listing of every `SkillCategory` from `src/content/skills.ts`, rendered as a flowing list of headed sections (category name + its tech items). Unlike Studies (08) and Experience (09), Skills has no per-item detail/deep-link target (spec 07's decision 6), so this page needs no expand/collapse pattern, no `?highlight=` handling, and no client-side state — a plain Server Component listing everything at once.
+Present every `SkillCategory` from `src/content/skills.ts` as a section on `/[locale]/experience`, after the "Professional Experience" and "Other experiences" lists — a closing tech-stack summary, reusing the same `SkillCategorySection` component built for v1. No standalone route, no per-item detail/deep-link target (unchanged from v1's underlying reasoning — spec 07 decision 6), no client-side state.
 
 ## Scope
 
-- **Route**: `src/app/[locale]/skills/page.tsx` (Server Component, no `searchParams` handling needed — nothing to highlight).
-- **`SkillCategorySection`** (`src/components/skills/SkillCategorySection.tsx`): renders one category — a real `h2` heading (the category label) followed by a row of MUI `Chip`s, one per item (plain strings, not translated — same as Experience's tech tags). The Chip row is wrapped with `role="group"` + an `aria-label` naming the category (e.g. `aria-label="Frontend Core skills"`), mirroring spec 09's tags-group pattern.
-- **Page composition**: page `h1` ("Skills"/"Habilidades") + all 7 `SkillCategorySection`s in the order declared in `src/content/skills.ts` (Frontend Core, Testing, Styling & UI, Forms/Dates & i18n, AI & Agents (emerging), Tooling & Workflow, Early Career: Java & Backend) — no reordering, no grouping/tiering beyond what the content file already expresses.
-- **Layout**: single-column flow of headed sections via `Box`/`Stack`, no card boxes, no MUI `Grid` — consistent with the project's flexbox-first convention and the site's document-like tone.
-- **No icons per category** — text-only `h2` headings.
-- **Early Career and AI & Agents categories render identically to every other category** — no de-emphasis, no special emphasis; see Decisions.
-- **Message files**: `messages/en.json` / `messages/es.json` get a new `skills` namespace: `heading` ("Skills"/"Habilidades"), `categoryItemsLabel` — a template string for each Chip-group's `aria-label` (e.g. `"{category} skills"` / `"Habilidades de {category}"`).
-- **Landing page**: no changes needed. `FeaturedSectionCard`'s Skills teaser (spec 07) already links to `/skills` with no params — it now resolves to a real page instead of 404ing.
+- **No separate route.** `src/app/[locale]/skills/page.tsx` (v1) is deleted. `src/app/[locale]/experience/page.tsx` (spec 09) gains a new block after `<ExperienceList />`: a `Box component="section" id="skills"` containing an `h2` ("Skills"/"Habilidades") and a flex-wrap grid of `SkillCategorySection`s.
+- **`SkillCategorySection`** (`src/components/skills/SkillCategorySection.tsx`, unchanged from v1 except heading level — see Accessibility below): one category — a heading + a row of MUI `Chip`s, one per item, wrapped with `role="group"` + `aria-label` naming the category. Now also sizes itself as a flex item (`flex: "1 1 260px"`) so multiple categories sit side by side.
+- **Layout — the actual fix for the "too empty" complaint**: the container around the `SkillCategorySection`s is `display: flex; flexWrap: wrap; gap: 3` — categories wrap into 2–4 columns depending on viewport width instead of stacking full-width in a single column, and collapse to one column on mobile.
+- **Anchor link**: `id="skills"` on the section's container, so `/experience#skills` jumps straight to it via native browser/Next.js anchor behavior — no custom scroll code needed (unlike the `?highlight=` mechanism, which exists specifically to un-collapse and scroll to `MUI Collapse` content; Skills content is never collapsed).
+- **Nav repointed**: `Header.tsx`'s "Skills" nav entry (desktop bar and mobile drawer) now resolves to `/experience#skills` instead of `/skills`, via a small `navHref()` helper — Skills stays a top-level, discoverable nav item even though it's no longer its own route.
+- **Landing teaser repointed**: the landing page's Skills `FeaturedSectionCard` (spec 07) now links to `/experience#skills` instead of `/skills`. No other landing-page changes.
+- **Message files**: no new keys. The `skills` namespace (`heading`, `categoryItemsLabel`) from v1 is reused as-is, now consumed from `experience/page.tsx` via a second `getTranslations("skills")` call alongside the page's existing `getTranslations("experience")` call.
 
 ## Content model
 
-No changes. `SkillCategory` (spec 06: `{ category: LocalizedText, items: string[] }`) already covers everything this page needs — no `id` field required, since Skills has no per-item highlight/deep-link target (spec 07 decision 6). First page in the roadmap that needs zero content-model additions.
+No changes (unchanged from v1). `SkillCategory` (spec 06: `{ category: LocalizedText, items: string[] }`) covers everything this section needs.
 
 ## Accessibility / semantics
 
-(Explicit per spec 00's Workflow requirement, mandatory from spec 09 onward.)
-
-- **Heading hierarchy**: one real `h1` ("Skills"), followed by 7 real `h2`s (one per category, in document order), each rendered via `Typography variant="h2"` with no `component` override needed — unlike spec 10's finding on card-title `subtitle1`s, these genuinely are page sections, so being real headings is correct here, not a repeat of that bug.
-- **Chip group labeling**: each category's `Chip` row gets `role="group"` + `aria-label` naming that category, so a screen reader announces it as a labeled group of skills rather than a run of disconnected words — same pattern spec 09 established for Experience's tags and spec 10 verified is rendering correctly.
-- **Color contrast**: this is the first page where tag/skill `Chip`s render unconditionally visible (no `Collapse` wrapper around them, unlike Experience's tags which only exist in expanded — and likely axe-unevaluated — content). Real, direct axe coverage of `Chip` contrast, not a rehash of prior pages.
-- **No new interactive elements** beyond nav-level ones already covered by spec 10's audit — no buttons, no expand/collapse, no focus-order or keyboard-trap risk introduced.
-- `tests-e2e/skills.spec.ts` gets an axe check for both `/en/skills` and `/es/skills` from the start (same `wcag2a`/`wcag2aa`/`wcag21a`/`wcag21aa` tag scope spec 10 established), rather than retrofitted later.
+- **Heading hierarchy fix, relative to v1**: v1 had `h1 → h2` (page → category) directly, which was correct standalone. Folded into Experience, categories now nest under a _new_ "Skills" `h2`, so each category label must drop to `h3` — otherwise "Skills" and "Frontend Core" would sit at the same heading level as siblings, which is wrong (Frontend Core is a subsection _of_ Skills). `SkillCategorySection`'s `Typography variant="h2"` became `variant="h3"`. Resulting hierarchy on `/experience`: `h1` ("Experience") → `h2` × 3 ("Professional Experience", "Other experiences", "Skills") → `h3` × 7 (category names, only under "Skills").
+- **Chip group labeling**: unchanged from v1 — each category's `Chip` row keeps its `role="group"` + `aria-label`.
+- **Color contrast**: unchanged from v1's finding — Skills' `Chip`s render unconditionally visible (no `Collapse` wrapper), so they get real, direct axe coverage rather than being buried in collapsed content. Confirmed zero violations post-fold.
+- **No new interactive elements** beyond what spec 09/10 already covered.
+- No dedicated `skills.spec.ts` anymore — its axe coverage is now provided by `experience.spec.ts`'s existing per-locale axe checks, which cover the same DOM content since Skills is now part of that page.
 
 ## Tests
 
-- Jest+RTL for `SkillCategorySection`: renders the heading text, renders every item as a `Chip`, and the Chip row's accessible group name matches the category.
-- Storybook story for `SkillCategorySection` (a representative category with several items).
-- `tests-e2e/skills.spec.ts`: page renders the `h1` and all 7 category `h2`s with their Chips, in both locales; axe check for both locales per above.
+- `SkillCategorySection.test.tsx` / `.stories.tsx`: updated heading-level assertions (`level: 2` → `level: 3`); everything else unchanged from v1.
+- `tests-e2e/experience.spec.ts` gained two tests: Skills section renders (heading + a category's labeled Chip group + an item) after the experience lists; the header's "Skills" nav link navigates to `/experience#skills` and the Skills heading lands in viewport.
+- `tests-e2e/skills.spec.ts` (v1) deleted — its assertions and axe checks are superseded by the additions to `experience.spec.ts` above.
 
 ## Out of scope
 
-- Any change to `SkillCategory`'s type or `src/content/skills.ts` data — reused as-is from spec 06.
-- Any change to the landing page — already correct per spec 07.
-- Proficiency levels / skill ratings — not part of the content model, not introduced here.
-- Filtering or searching skills — not requested, no precedent from Studies/Experience either.
+- Any change to `SkillCategory`'s type or `src/content/skills.ts` data.
+- Any further landing-page changes beyond the one `href` update.
+- Proficiency levels, filtering/searching skills — not requested, no precedent from Studies/Experience either.
 
 ## Decisions
 
-1. Layout is a flowing list of headed sections (`h2` + Chip row per category), not a card grid — matches the site's document-like tone and avoids a new card component built for a single page.
-2. No icon per category — text-only headings; unlike Hobbies' 4 fixed personal items, 7 tech categories don't map to distinct icons without feeling arbitrary.
-3. "Early Career: Java & Backend" renders identically to every other category — no de-emphasis styling, unlike spec 09's treatment of early-career _work experience_. These are current, real skills regardless of when they were learned.
-4. "AI & Agents (emerging)" renders identically to every other category — no special visual emphasis; the "(emerging)" qualifier is already textual in the translated label.
-5. No content-model changes — `SkillCategory` as shipped in spec 06 already covers this page's needs.
-6. No client-side interactivity — Server Component throughout, no `?highlight=` support (per spec 07 decision 6: Skills has no per-item detail target).
+1. Skills lives as a section on the Experience page, not its own route — job history stays the page's lead subject (its `h1`); Skills reads as a closing tech-stack summary.
+2. Categories render in a wrapping multi-column flex grid, not a single-column stack — this is what actually fixes the visual sparseness, independent of where the content lives.
+3. Category headings drop from `h3` (this doc's earlier `h2`) to sit correctly under the new "Skills" `h2`, avoiding a repeat of spec 10's heading-hierarchy class of bug in the opposite direction.
+4. `/skills` and its `Status: Approved` v1 spec text are retired in favor of this rewritten document — the paper trail is kept via this Revision note rather than a silent rewrite, consistent with how specs 07–10 document deviations and decisions.
+5. Nav and the landing teaser both repoint to `/experience#skills` rather than dropping Skills from top-level navigation — it's still one of spec 00's original six sections and stays discoverable.
 
 ## Verification
 
-- `/en/skills` and `/es/skills` render one `h1` and 7 real `h2` category headings, each followed by its items as Chips, in the order declared in `src/content/skills.ts`.
-- Each category's Chip row has an accessible group name distinguishing it from the others (spot-checked via RTL/Playwright `getByRole("group", { name: ... })`).
-- Landing page's existing Skills teaser card navigates to `/skills` and now resolves instead of 404ing.
-- `pnpm test`, `pnpm test:storybook`, `pnpm test:e2e` (including the new axe checks), `pnpm build`, `pnpm lint`, `pnpm typecheck` all pass.
+- `/en/experience` and `/es/experience` render `h1 → h2 × 3 → h3 × 7` in that nesting order, with the Skills grid wrapping into multiple columns on desktop and one column on mobile.
+- `/skills` no longer exists (confirmed via `pnpm build`'s route list).
+- Header's "Skills" nav link and the landing page's Skills teaser both navigate to `/experience#skills` and land on/scroll to the section.
+- `pnpm test`, `pnpm test:storybook`, `pnpm test:e2e` (including `experience.spec.ts`'s per-locale axe checks, zero violations), `pnpm build`, `pnpm lint`, `pnpm typecheck` all pass.

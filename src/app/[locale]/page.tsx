@@ -97,7 +97,7 @@ export default function Home() {
               first: getLocalizedText(firstSkillCategory.category, locale),
               second: getLocalizedText(secondSkillCategory.category, locale),
             })}
-            href="/skills"
+            href="/experience#skills"
           />
         )}
         <FeaturedSectionCard

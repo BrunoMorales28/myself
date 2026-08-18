@@ -43,5 +43,9 @@
     "logoAlt": "{company} logo",
     "present": "Present",
     "tagsGroupLabel": "Technologies used"
+  },
+  "skills": {
+    "heading": "Skills",
+    "categoryItemsLabel": "{category} skills"
   }
 }
