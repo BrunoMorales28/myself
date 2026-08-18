@@ -51,5 +51,16 @@
   "about": {
     "heading": "Sobre mí",
     "hobbiesHeading": "Hobbies"
+  },
+  "notFound": {
+    "heading": "Página no encontrada",
+    "body": "La página que buscás no existe. Puede que se haya movido o que el enlace esté roto.",
+    "homeLink": "Volver al inicio"
+  },
+  "error": {
+    "heading": "Algo salió mal",
+    "body": "Ocurrió un error inesperado al cargar esta página.",
+    "tryAgain": "Reintentar",
+    "homeLink": "Volver al inicio"
   }
 }

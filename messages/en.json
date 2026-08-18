@@ -51,5 +51,16 @@
   "about": {
     "heading": "About",
     "hobbiesHeading": "Hobbies"
+  },
+  "notFound": {
+    "heading": "Page not found",
+    "body": "The page you're looking for doesn't exist. It may have been moved or the link might be broken.",
+    "homeLink": "Back to home"
+  },
+  "error": {
+    "heading": "Something went wrong",
+    "body": "An unexpected error occurred while loading this page.",
+    "tryAgain": "Try again",
+    "homeLink": "Back to home"
   }
 }
