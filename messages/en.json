@@ -47,5 +47,9 @@
   "skills": {
     "heading": "Skills",
     "categoryItemsLabel": "{category} skills"
+  },
+  "about": {
+    "heading": "About",
+    "hobbiesHeading": "Hobbies"
   }
 }

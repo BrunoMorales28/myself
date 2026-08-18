@@ -47,5 +47,9 @@
   "skills": {
     "heading": "Habilidades",
     "categoryItemsLabel": "Habilidades de {category}"
+  },
+  "about": {
+    "heading": "Sobre mí",
+    "hobbiesHeading": "Hobbies"
   }
 }
