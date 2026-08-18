@@ -62,5 +62,22 @@
     "body": "An unexpected error occurred while loading this page.",
     "tryAgain": "Try again",
     "homeLink": "Back to home"
+  },
+  "contact": {
+    "heading": "Contact",
+    "intro": "Have a project in mind, or just want to say hi? Reach out directly or use the form below.",
+    "linkedinLabel": "LinkedIn",
+    "githubLabel": "GitHub",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "messageLabel": "Message",
+    "nameRequired": "Please enter your name.",
+    "emailRequired": "Please enter your email address.",
+    "emailInvalid": "Please enter a valid email address.",
+    "messageRequired": "Please enter a message.",
+    "submitLabel": "Send message",
+    "submittingLabel": "Sending…",
+    "successMessage": "Thanks — your message has been sent.",
+    "errorMessage": "Something went wrong sending your message. Please try again."
   }
 }

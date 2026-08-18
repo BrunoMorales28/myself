@@ -62,5 +62,22 @@
     "body": "Ocurrió un error inesperado al cargar esta página.",
     "tryAgain": "Reintentar",
     "homeLink": "Volver al inicio"
+  },
+  "contact": {
+    "heading": "Contacto",
+    "intro": "¿Tenés un proyecto en mente, o solo querés saludar? Escribime directamente o usá el formulario de abajo.",
+    "linkedinLabel": "LinkedIn",
+    "githubLabel": "GitHub",
+    "nameLabel": "Nombre",
+    "emailLabel": "Email",
+    "messageLabel": "Mensaje",
+    "nameRequired": "Por favor ingresá tu nombre.",
+    "emailRequired": "Por favor ingresá tu email.",
+    "emailInvalid": "Por favor ingresá un email válido.",
+    "messageRequired": "Por favor ingresá un mensaje.",
+    "submitLabel": "Enviar mensaje",
+    "submittingLabel": "Enviando…",
+    "successMessage": "Gracias — tu mensaje fue enviado.",
+    "errorMessage": "Ocurrió un error al enviar tu mensaje. Por favor, intentá de nuevo."
   }
 }

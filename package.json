@@ -25,10 +25,12 @@
     "@mui/material": "^9.2.0",
     "@mui/material-nextjs": "^9.1.1",
     "@react-pdf/renderer": "^4.6.1",
+    "formik": "^2.4.9",
     "next": "16.2.12",
     "next-intl": "^4.13.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.13.0",

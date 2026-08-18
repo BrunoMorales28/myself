@@ -1,0 +1,54 @@
+# 15 — Contact Form UI
+
+Status: Implemented
+Depends on: [05-base-layout](./05-base-layout.md), [14-cv-pdf-generation](./14-cv-pdf-generation.md)
+
+## Goal
+
+Build `/[locale]/contact` — currently a dead link from the header nav, the landing page's Contact teaser card, and (per spec 00's roadmap) the last page the site needs before the backend/notification/agent work. This spec is UI only: the form, its client-side validation, and its accessible states. It doesn't persist anything yet — spec 16 (Contact backend) adds the Postgres-backed API route this form submits to; spec 17 (Contact notifications) wires that submission to email/WhatsApp alerts. Until spec 16 ships, submitting will genuinely fail — same "points at a route that doesn't exist yet" precedent as spec 07's CV button before spec 14, or spec 05's nav links before their target pages existed.
+
+## Scope
+
+- **Route**: `src/app/[locale]/contact/page.tsx` (Server Component) — page heading, a short intro line, direct contact links (email/LinkedIn/GitHub from `src/content/contact.ts`, spec 14's content), and the form itself.
+- **`ContactForm`** (`src/components/contact/ContactForm.tsx`, Client Component): built with Formik (form state/submission) + Yup (schema validation) — see decision 1. Fields — name, email, message (all required), plus a hidden honeypot field (decision 2) that's part of the Formik values but excluded from the accessible form entirely. Client-side validation on blur/submit with inline, field-level error messages (real `<label>`/`aria-describedby`/`aria-invalid` wiring, not just red borders). Submit button shows a loading state while the (stubbed) submission is in flight and is disabled during it (prevents double-submit).
+- **Submission target**: `POST /api/contact` with `{ name, email, message }` — the route doesn't exist until spec 16, so this spec's form will show its error state against a real `404`/network failure until then. That failure path is exercised and tested now (not assumed to "just work" later) so it doesn't need revisiting when spec 16 lands — spec 16 only has to make the request start succeeding.
+- **Success/error states**: a toast (MUI `Snackbar` + `Alert`) on both outcomes — success clears/resets the form (the toast itself is the confirmation, so there's nothing left to review inline); failure leaves all entered values in place so the visitor can retry without retyping anything. Updated after initial review: shipped first with a persistent inline success/error message, changed to a toast per Bruno's follow-up feedback.
+- **Message files**: `messages/en.json` / `messages/es.json` get a `contact` namespace — page heading, intro, field labels, validation messages, submit button label/loading label, success message, error message.
+- **Accessibility**: every field has a real, associated `<label>`; validation errors are announced (`aria-live` region or `aria-describedby` linking the error text to its field, `aria-invalid="true"` on the field while invalid); the submit button's loading state is conveyed to assistive tech (not just a visual spinner); focus moves to the first invalid field on a failed submit attempt; the toast uses MUI `Alert`'s default `role="alert"` (an implicit assertive live region), so screen reader users hear the outcome as soon as it happens without needing to re-scan the page.
+
+## Out of scope
+
+- The actual `/api/contact` route, request validation server-side, and persistence — spec 16.
+- Email/WhatsApp notifications on submission — spec 17.
+- CAPTCHA or third-party spam/bot protection — revisit only if spam turns out to be a real problem after launch; a honeypot field (see Decisions) is the only anti-spam measure in this spec.
+- Rate limiting — a backend concern, spec 16's territory if it's added at all.
+
+## Backend concepts
+
+- **Why the form is a Client Component but the page isn't**: the page itself (heading, intro, static contact links) has no interactivity and can stay a Server Component for the usual reasons (smaller client bundle, no unnecessary hydration); the form needs local state (field values, validation errors, submit-in-flight status) and event handlers, which only work in a Client Component (`"use client"`).
+- **Optimistic UI vs. waiting for the response**: this form waits for the `fetch` response before showing success/error (no optimistic "assume it worked" state) — a contact form is exactly the case where silently assuming success on a failed submission is worse than a brief loading spinner, since the visitor has no other way to tell if their message actually arrived.
+- **Honeypot spam filtering**: a form field named something a bot's generic autofill logic will plausibly try to fill (e.g. `website`), hidden from real users via CSS/`aria-hidden` rather than `type="hidden"` (some bots skip genuinely hidden inputs, so visual-only hiding via `sx`/CSS catches more of them) — a human never sees or fills it, but unsophisticated scripted form-fillers often do. If it's non-empty on submit, the client treats the submission as spam and drops it silently (still shows the normal success state, so a bot's script doesn't learn its submissions are being filtered).
+
+## Decisions
+
+1. **Formik + Yup** for form state/validation — both are already listed under Skills (Forms, Dates & i18n), but nothing in the codebase used them until now; this form is real, working proof of that claim instead of an unexercised bullet point.
+2. **Honeypot field** as the only anti-spam measure: a field hidden from sighted/keyboard users (visually hidden, `tabIndex={-1}`, `aria-hidden="true"`, autocomplete off) that real visitors never fill in — if it arrives non-empty, the client silently drops the submission (no network request, no error shown, so a bot can't tell it was caught). No CAPTCHA, no third-party service.
+
+## Implementation notes (deviations from plan)
+
+- **`msw-storybook-addon` isn't installed/wired into `.storybook/preview.tsx`** — spec 03 set up MSW for Jest (and left `src/mocks/browser.ts` as a placeholder for a browser worker), but never wired a Storybook integration. Discovered while writing this form's stories: `parameters.msw.handlers` is silently a no-op without the addon, so a "successful submission" story would have made a real, unmocked `fetch` to `/api/contact` from inside Storybook's dev server. Rather than adding that tooling as a side effect of a content spec, `ContactForm.stories.tsx` only covers the two states reachable without a network call (default render, validation errors) — the success/error/honeypot paths are covered by `ContactForm.test.tsx` (Jest + MSW, which _is_ wired) and `tests-e2e/contact.spec.ts` instead. Wiring `msw-storybook-addon` is a reasonable future spec if more forms/components need network-dependent stories.
+- **A real accessibility bug, caught by axe, not by manual review**: MUI's `TextField` doesn't forward a top-level `tabIndex`/`autoComplete` prop to the actual `<input>` — it lands on the wrapping `MuiFormControl` `<div>` instead. The honeypot field's `<input>` was therefore still in the natural tab order and screen-reader-focusable despite sitting inside an `aria-hidden="true"` container — a real WCAG failure (`aria-hidden-focus`, "focusable content inside an aria-hidden ancestor"), not a hypothetical one. Fixed by moving `tabIndex: -1` and `autoComplete: "off"` into `slotProps={{ htmlInput: { ... } }}`, which does target the native `<input>`. Confirmed fixed via `@axe-core/playwright` (zero violations) rather than just visual/keyboard spot-checking, which wouldn't have caught this (the field was already invisible and untabbable via `Tab`; the bug was specifically about assistive-tech focusability, not sighted keyboard use).
+- **A real test bug, not a component bug**: the first `ContactForm.test.tsx` draft filled all three fields with `Promise.all([user.type(...), user.type(...), user.type(...)])`. `userEvent.type` simulates keystrokes as an async sequence; running three of them concurrently interleaved their keystroke event loops across fields, producing scrambled input values (e.g. `"AaLddeaat @'Lesox..."`) and failing every network-dependent test. Fixed by awaiting each `user.type()` sequentially — the component itself was correct throughout.
+- **`tests-e2e/contact.spec.ts`'s GitHub link query needed `{ exact: true }`**: the footer's existing "View source on GitHub" link (spec 05) also matches a substring role-name query for `"GitHub"`, so `page.getByRole("link", { name: "GitHub" })` was ambiguous (Playwright strict-mode violation) — same class of issue spec 09 already hit with duplicate role names, same fix.
+- **Success/error feedback moved from a persistent inline message to a toast, post-review.** The form initially shipped with an `aria-live` `Box` holding an inline `Alert` below the submit button (still fully accessible), but Bruno preferred a toast after seeing it rendered. Swapped for MUI `Snackbar` + `Alert` (`variant="filled"`, 6s auto-hide, dismissible), used for both outcomes for consistency (Bruno's call, not just the error case as first requested) — `Alert`'s default `role="alert"` carries the same accessibility guarantee the old `aria-live` region did, so no accessibility regression, confirmed by axe staying at zero violations. A successful submission now also resets the form (`resetForm()`) — since the toast itself is the confirmation and disappears after a few seconds, leaving the filled-in form behind afterward with no visible acknowledgement would have been more confusing than clearing it.
+
+## Verification
+
+- `/en/contact` and `/es/contact` render the heading, intro, direct contact links, and the form.
+- Submitting with empty/invalid fields shows inline, field-associated error messages and moves focus to the first invalid field; nothing is submitted.
+- Submitting a valid form (against the not-yet-existing `/api/contact` backend) shows the loading state, then an error toast on failure, with entered values preserved — verified via both Jest (mocked failure via MSW) and a real e2e request against the genuinely-missing route.
+- A successful submission (Jest-mocked, since no real backend exists yet) shows a success toast and resets all fields.
+- A filled honeypot field shows the success toast without making a network request (Jest-verified) and doesn't introduce a focusable element inside `aria-hidden` content (axe-verified).
+- All error/success messaging is exposed to assistive tech via the toast's `role="alert"`, and field errors via `aria-describedby`, not color/visual state alone.
+- `tests-e2e/contact.spec.ts` covers page rendering, empty-submit validation + focus, the failed-submission path, and per-locale axe checks (zero violations).
+- `pnpm test`, `pnpm test:storybook`, `pnpm test:e2e`, `pnpm build`, `pnpm lint`, `pnpm typecheck` all pass.
