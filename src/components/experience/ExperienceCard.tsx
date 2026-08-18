@@ -66,9 +66,15 @@ export const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
               {getInitials(company)}
             </Avatar>
             <Box sx={{ flex: 1 }}>
-              <Typography variant="subtitle1">{role}</Typography>
+              <Typography
+                variant="subtitle1"
+                component="span"
+                sx={{ display: "block" }}
+              >
+                {company}
+              </Typography>
               <Typography variant="body2" color="text.secondary">
-                {company} · {dateRange}
+                {role} · {dateRange}
               </Typography>
             </Box>
           </Stack>

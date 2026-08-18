@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 
 test("home page redirects to a locale and renders", async ({ page }) => {
   await page.goto("/");
@@ -40,3 +41,15 @@ test("language switcher changes locale and keeps the current page", async ({
   await page.getByRole("button", { name: "ES" }).click();
   await expect(page).toHaveURL(/\/es\/?$/);
 });
+
+for (const locale of ["en", "es"] as const) {
+  test(`landing page (${locale}) has no accessibility violations`, async ({
+    page,
+  }) => {
+    await page.goto(`/${locale}`);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+    expect(results.violations).toEqual([]);
+  });
+}

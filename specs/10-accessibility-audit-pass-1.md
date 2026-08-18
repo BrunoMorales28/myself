@@ -1,6 +1,6 @@
 # 10 — Accessibility & Semantics Audit (Pass 1)
 
-Status: Approved
+Status: Implemented
 Depends on: [05-base-layout](./05-base-layout.md), [07-landing-page](./07-landing-page.md), [08-studies-page](./08-studies-page.md), [09-experience-page](./09-experience-page.md)
 
 ## Goal
@@ -39,6 +39,14 @@ None — this is a frontend correctness/tooling pass.
 2. `@axe-core/playwright` gets wired in now rather than at spec 22 — once it's in the e2e suite, every subsequent spec's e2e tests get axe coverage for free, catching regressions immediately instead of only at the final audit.
 3. Findings get fixed as part of this spec, not just logged for later.
 4. Scope is limited to what's already shipped (layout, landing, studies, experience) — not a preemptive audit of unbuilt pages.
+
+## Implementation notes (findings log)
+
+- **Heading hierarchy — real bug, fixed.** MUI's `Typography variant="subtitle1"` renders an actual `<h6>` element by default (its `defaultVariantMapping`). Four components used it with no `component` override for what are card/item _labels_, not document sections: `ExperienceCard`'s company name, `StudyCard`'s institution name, `ItemListSection`'s item title (landing page), and `FeaturedSectionCard`'s title (Skills/Contact teasers). This meant every page had a real `h1 → h2 → h6` skip (13 stray `h6`s on the Experience page alone), and in `StudyCard`/`ExperienceCard` the `<h6>` sat inside a `<button>`, which is invalid HTML — a heading element isn't permitted content inside `button` (phrasing-content-only). Fixed by giving all four an explicit `component="span"` + `sx={{ display: "block" }}` (span keeps them valid inside `button`'s phrasing-content model; the explicit block display preserves the existing stacked layout, since span is inline by default and nothing in the theme forces block on Typography). Header's own `variant="h6"` site name was checked and is fine — it already has `component={Link}`, which overrides the tag to `<a>`, not `<h6>`.
+- **Missing nav landmark — real gap, fixed.** The header's nav links (desktop `Stack` of buttons, and the mobile `Drawer`'s `List`) weren't wrapped in a `<nav>` element, so screen reader users had no landmark to jump straight to site navigation. Wrapped both in `<nav aria-label="Main navigation">` (new `nav.mainNavigation` message key, EN/ES). Only one is ever exposed to the accessibility tree at a given viewport width (the other is `display: none`), so no duplicate-landmark conflict.
+- **Color contrast — real bug, fixed.** `@axe-core/playwright` caught a genuine, if narrow, AA failure: the language switcher's unselected button ("EN"/"ES", whichever isn't active) used MUI's default unselected-`ToggleButton` gray (`#717171`) against the header's default AppBar background (`#f5f5f5`) — 4.48:1, just under the 4.5:1 body-text threshold. Fixed via a `MuiToggleButton` theme override reusing the existing `text.secondary` token (`#5A6472`, 5.50:1 against the same background) rather than introducing a new color.
+- **Everything else on the manual checklist held up as claimed**: landmarks (`header`/`main`/`footer` singular and correctly typed — `AppBar` defaults to `<header>`, `Container component="main"`, `Footer`'s `component="footer"`), `aria-expanded` on all card toggles, the experience tags' `role="group"` + `aria-label`, `Avatar` fallback accessible names, focus rings (unmodified MUI/theme defaults, never suppressed), and `<html lang>` correctly reflecting the active locale via `getLocale()`. No changes needed for any of these.
+- `@axe-core/playwright` is now wired into `landing.spec.ts`, `studies.spec.ts`, and `experience.spec.ts`, one test per page per locale (6 total), scoped to `wcag2a`/`wcag2aa`/`wcag21a`/`wcag21aa` tags per this spec's stated rule set. All 6 pass after the fixes above.
 
 ## Verification
 

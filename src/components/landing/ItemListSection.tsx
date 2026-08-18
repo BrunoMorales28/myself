@@ -37,7 +37,13 @@ export function ItemListSection({
             <CardActionArea component={Link} href={item.href} sx={{ p: 2 }}>
               <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
                 {item.avatar}
-                <Typography variant="subtitle1">{item.title}</Typography>
+                <Typography
+                  variant="subtitle1"
+                  component="span"
+                  sx={{ display: "block" }}
+                >
+                  {item.title}
+                </Typography>
               </Stack>
             </CardActionArea>
           </Card>

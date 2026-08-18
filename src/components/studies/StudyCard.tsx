@@ -59,9 +59,15 @@ export const StudyCard = forwardRef<HTMLDivElement, StudyCardProps>(
               {getInitials(institution)}
             </Avatar>
             <Box sx={{ flex: 1 }}>
-              <Typography variant="subtitle1">{degree}</Typography>
+              <Typography
+                variant="subtitle1"
+                component="span"
+                sx={{ display: "block" }}
+              >
+                {institution}
+              </Typography>
               <Typography variant="body2" color="text.secondary">
-                {institution} · {dateRange}
+                {degree} · {dateRange}
               </Typography>
             </Box>
           </Stack>

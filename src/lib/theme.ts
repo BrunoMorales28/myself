@@ -29,4 +29,13 @@ export const theme = createTheme({
   shape: {
     borderRadius: 4,
   },
+  components: {
+    MuiToggleButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          color: theme.palette.text.secondary,
+        }),
+      },
+    },
+  },
 });

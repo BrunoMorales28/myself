@@ -47,11 +47,18 @@ export function Header() {
           spacing={1}
           sx={{ alignItems: "center", display: { xs: "none", sm: "flex" } }}
         >
-          {navKeys.map((key) => (
-            <Button key={key} component={Link} href={`/${key}`}>
-              {t(key)}
-            </Button>
-          ))}
+          <Stack
+            component="nav"
+            aria-label={t("mainNavigation")}
+            direction="row"
+            spacing={1}
+          >
+            {navKeys.map((key) => (
+              <Button key={key} component={Link} href={`/${key}`}>
+                {t(key)}
+              </Button>
+            ))}
+          </Stack>
           <LanguageSwitcher />
         </Stack>
 
@@ -71,19 +78,21 @@ export function Header() {
         onClose={() => setDrawerOpen(false)}
       >
         <Box role="presentation" sx={{ width: 240 }}>
-          <List>
-            {navKeys.map((key) => (
-              <ListItem key={key} disablePadding>
-                <ListItemButton
-                  component={Link}
-                  href={`/${key}`}
-                  onClick={() => setDrawerOpen(false)}
-                >
-                  <ListItemText primary={t(key)} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+          <Box component="nav" aria-label={t("mainNavigation")}>
+            <List>
+              {navKeys.map((key) => (
+                <ListItem key={key} disablePadding>
+                  <ListItemButton
+                    component={Link}
+                    href={`/${key}`}
+                    onClick={() => setDrawerOpen(false)}
+                  >
+                    <ListItemText primary={t(key)} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
           <Box sx={{ p: 2 }}>
             <LanguageSwitcher />
           </Box>

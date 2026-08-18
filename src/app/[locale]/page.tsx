@@ -25,7 +25,7 @@ export default function Home() {
     .slice(0, EXPERIENCE_LIMIT)
     .map((entry) => ({
       id: entry.id,
-      title: getLocalizedText(entry.role, locale),
+      title: entry.company,
       href: `/experience?highlight=${entry.id}`,
       avatar: (
         <Avatar
@@ -39,7 +39,7 @@ export default function Home() {
 
   const studiesItems = studies.map((entry) => ({
     id: entry.id,
-    title: getLocalizedText(entry.degree, locale),
+    title: entry.institution,
     href: `/studies?highlight=${entry.id}`,
     avatar: (
       <Avatar

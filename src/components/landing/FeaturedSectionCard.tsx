@@ -21,7 +21,11 @@ export function FeaturedSectionCard({
         href={href}
         sx={{ p: 2, height: "100%" }}
       >
-        <Typography variant="subtitle1" sx={{ mb: 1 }}>
+        <Typography
+          variant="subtitle1"
+          component="span"
+          sx={{ mb: 1, display: "block" }}
+        >
           {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
