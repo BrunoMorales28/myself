@@ -1,6 +1,6 @@
 # 04 — Theme & Design Tokens
 
-Status: Implemented
+Status: Implemented (superseded by [17-visual-restyle](./17-visual-restyle.md))
 Depends on: [01-project-scaffold](./01-project-scaffold.md)
 
 ## Goal

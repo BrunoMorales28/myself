@@ -49,32 +49,36 @@ Bruno handles all git operations (commits, pushes, PRs) himself.
 
 ## Sub-spec roadmap
 
-1. Project scaffold
-2. Tooling: lint/format/hooks
-3. Tooling: test stack init (Jest+RTL, Playwright, Storybook, MSW)
-4. Theme & design tokens
-5. Base layout (header/nav/language selector/footer)
-6. Content data model
-7. Landing page
-8. Studies page
-9. Work experience page
-10. Accessibility & semantics audit — pass 1 (interim audit of specs 1–9: layout, landing, studies, experience; catches drift early instead of only at the end)
-11. Skills/tech stack page
-12. About me page
-13. CV PDF generation
-14. Contact form UI
-15. Contact backend (Postgres + API route)
-16. Contact notifications (Resend + Twilio WhatsApp)
-17. Agent core (Claude API + chat UI, no tools)
-18. Agent tool: CV search
-19. Agent tool: PDF download trigger
-20. Agent tool: contact form submission
-21. Agent tool: site navigation
-22. Accessibility audit pass — pass 2 (full site, final)
-23. i18n completeness pass
-24. Deployment & analytics
+Numbering matches the actual filename under `/specs` — this list is kept in sync with what's really there, not aspirational. Status mirrors each spec's own `Status:` field (`Implemented` / `Draft`); items past 17 have no spec file yet (`Not started`) and are the current best plan for what comes next, not a contract.
 
-Numbering/order may shift as we learn more; this list is the current best plan, not a contract.
+| #   | Spec                                                                                                                | Status                            |
+| --- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| 1   | [Project scaffold](./01-project-scaffold.md)                                                                        | ✅ Implemented                    |
+| 2   | [Tooling: lint/format/hooks](./02-tooling-lint-hooks.md)                                                            | ✅ Implemented                    |
+| 3   | [Tooling: test stack init](./03-tooling-test-stack.md) (Jest+RTL, Playwright, Storybook, MSW)                       | ✅ Implemented                    |
+| 4   | [Theme & design tokens](./04-theme-design-tokens.md)                                                                | ✅ Implemented (superseded by 17) |
+| 5   | [Base layout](./05-base-layout.md) (header/nav/language selector/footer)                                            | ✅ Implemented                    |
+| 6   | [Content data model](./06-content-data-model.md)                                                                    | ✅ Implemented                    |
+| 7   | [Landing page](./07-landing-page.md)                                                                                | ✅ Implemented                    |
+| 8   | [Studies page](./08-studies-page.md)                                                                                | ✅ Implemented                    |
+| 9   | [Work experience page](./09-experience-page.md)                                                                     | ✅ Implemented                    |
+| 10  | [Accessibility & semantics audit — pass 1](./10-accessibility-audit-pass-1.md) (interim audit of specs 1–9)         | ✅ Implemented                    |
+| 11  | [Skills/tech stack section](./11-skills-page.md)                                                                    | ✅ Implemented                    |
+| 12  | [About me page](./12-about-page.md)                                                                                 | ✅ Implemented                    |
+| 13  | [Support views](./13-support-views.md) (404 & error pages)                                                          | ✅ Implemented                    |
+| 14  | [CV PDF generation](./14-cv-pdf-generation.md)                                                                      | ✅ Implemented                    |
+| 15  | [Contact form UI](./15-contact-form-ui.md)                                                                          | ✅ Implemented                    |
+| 16  | [Contact backend](./16-contact-backend.md) (Postgres + API route)                                                   | ✅ Implemented                    |
+| 17  | [Visual restyle](./17-visual-restyle.md) (new theme, typography, full-bleed section backgrounds, mobile-first pass) | 📝 Draft — up next                |
+| 18  | Contact notifications (Resend + Twilio WhatsApp)                                                                    | Not started                       |
+| 19  | Agent core (Claude API + chat UI, no tools)                                                                         | Not started                       |
+| 20  | Agent tool: CV search                                                                                               | Not started                       |
+| 21  | Agent tool: PDF download trigger                                                                                    | Not started                       |
+| 22  | Agent tool: contact form submission                                                                                 | Not started                       |
+| 23  | Agent tool: site navigation                                                                                         | Not started                       |
+| 24  | Accessibility audit pass — pass 2 (full site, final)                                                                | Not started                       |
+| 25  | i18n completeness pass                                                                                              | Not started                       |
+| 26  | Deployment & analytics                                                                                              | Not started                       |
 
 ## Definition of done (v1)
 
