@@ -27,8 +27,8 @@ export const about: AboutContent = {
     {
       id: "combat",
       label: {
-        en: "Medieval combat and fairs",
-        es: "Combate medieval y ferias",
+        en: "Medieval combat",
+        es: "Combate medieval",
       },
       description: {
         en: "Practices historical medieval combat and takes part in renaissance fairs — full armor included.",

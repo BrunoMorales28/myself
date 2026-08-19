@@ -13,6 +13,7 @@ import { getInitials } from "@/lib/initials";
 import { Hero } from "@/components/landing/Hero";
 import { ItemListSection } from "@/components/landing/ItemListSection";
 import { FeaturedSectionCard } from "@/components/landing/FeaturedSectionCard";
+import { Section } from "@/components/layout/Section";
 
 const EXPERIENCE_LIMIT = 4;
 
@@ -68,44 +69,54 @@ export default function Home() {
   const [firstSkillCategory, secondSkillCategory] = skills;
 
   return (
-    <Box>
-      <Hero
-        title={t("heroTitle")}
-        intro={t("heroIntro")}
-        downloadCvLabel={t("downloadCv")}
-        downloadCvHref={`/${locale}/cv.pdf`}
-        contactLabel={t("contact")}
-        contactHref="/contact"
-      />
-
-      <ItemListSection
-        title={t("experienceTitle")}
-        items={experienceItems}
-        viewAllHref="/experience"
-        viewAllLabel={t("experienceViewAll")}
-      />
-
-      <ItemListSection title={t("studiesTitle")} items={studiesItems} />
-
-      <ItemListSection title={t("hobbiesTitle")} items={hobbyItems} />
-
-      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, py: 2 }}>
-        {firstSkillCategory && secondSkillCategory && (
-          <FeaturedSectionCard
-            title={t("skillsTitle")}
-            description={t("skillsTeaser", {
-              first: getLocalizedText(firstSkillCategory.category, locale),
-              second: getLocalizedText(secondSkillCategory.category, locale),
-            })}
-            href="/experience#skills"
-          />
-        )}
-        <FeaturedSectionCard
-          title={t("contactTeaserTitle")}
-          description={t("contactTeaser")}
-          href="/contact"
+    <>
+      <Section tint="default">
+        <Hero
+          title={t("heroTitle")}
+          intro={t("heroIntro")}
+          downloadCvLabel={t("downloadCv")}
+          downloadCvHref={`/${locale}/cv.pdf`}
+          contactLabel={t("contact")}
+          contactHref="/contact"
         />
-      </Box>
-    </Box>
+      </Section>
+
+      <Section tint="light">
+        <ItemListSection
+          title={t("experienceTitle")}
+          items={experienceItems}
+          viewAllHref="/experience"
+          viewAllLabel={t("experienceViewAll")}
+        />
+      </Section>
+
+      <Section tint="default">
+        <ItemListSection title={t("studiesTitle")} items={studiesItems} />
+      </Section>
+
+      <Section tint="light">
+        <ItemListSection title={t("hobbiesTitle")} items={hobbyItems} />
+      </Section>
+
+      <Section tint="deep">
+        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+          {firstSkillCategory && secondSkillCategory && (
+            <FeaturedSectionCard
+              title={t("skillsTitle")}
+              description={t("skillsTeaser", {
+                first: getLocalizedText(firstSkillCategory.category, locale),
+                second: getLocalizedText(secondSkillCategory.category, locale),
+              })}
+              href="/experience#skills"
+            />
+          )}
+          <FeaturedSectionCard
+            title={t("contactTeaserTitle")}
+            description={t("contactTeaser")}
+            href="/contact"
+          />
+        </Box>
+      </Section>
+    </>
   );
 }

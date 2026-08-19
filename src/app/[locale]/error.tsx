@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Link } from "@/i18n/navigation";
+import { Section } from "@/components/layout/Section";
 
 export default function LocaleError({
   reset,
@@ -15,7 +16,7 @@ export default function LocaleError({
   const t = useTranslations("error");
 
   return (
-    <>
+    <Section tint="default">
       <Typography variant="h1" sx={{ mb: 2 }}>
         {t("heading")}
       </Typography>
@@ -30,6 +31,6 @@ export default function LocaleError({
           {t("homeLink")}
         </Button>
       </Stack>
-    </>
+    </Section>
   );
 }

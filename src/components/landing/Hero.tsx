@@ -22,7 +22,14 @@ export function Hero({
   contactHref,
 }: HeroProps) {
   return (
-    <Box component="section" sx={{ py: 4 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        minHeight: { md: "75vh" },
+      }}
+    >
       <Typography
         variant="h1"
         sx={{ mb: 2, fontSize: { xs: "2.25rem", sm: "3rem", md: "3.75rem" } }}

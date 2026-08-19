@@ -2,6 +2,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import Typography from "@mui/material/Typography";
 import { about, hobbyIcons, getLocalizedText } from "@/content";
 import { HobbiesList } from "@/components/about/HobbiesList";
+import { Section } from "@/components/layout/Section";
 
 type AboutPageProps = {
   searchParams: Promise<{ highlight?: string }>;
@@ -21,16 +22,20 @@ export default async function AboutPage({ searchParams }: AboutPageProps) {
 
   return (
     <>
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        {t("heading")}
-      </Typography>
-      <Typography variant="body1" sx={{ mb: 4 }}>
-        {getLocalizedText(about.bio, locale)}
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 2 }}>
-        {t("hobbiesHeading")}
-      </Typography>
-      <HobbiesList entries={entries} highlight={highlight} />
+      <Section tint="default">
+        <Typography variant="h1" sx={{ mb: 3 }}>
+          {t("heading")}
+        </Typography>
+        <Typography variant="body1">
+          {getLocalizedText(about.bio, locale)}
+        </Typography>
+      </Section>
+      <Section tint="light">
+        <Typography variant="h2" sx={{ mb: 2 }}>
+          {t("hobbiesHeading")}
+        </Typography>
+        <HobbiesList entries={entries} highlight={highlight} />
+      </Section>
     </>
   );
 }

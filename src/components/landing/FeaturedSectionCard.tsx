@@ -15,11 +15,15 @@ export function FeaturedSectionCard({
   href,
 }: FeaturedSectionCardProps) {
   return (
-    <Card sx={{ flex: "1 1 280px" }}>
+    <Card sx={{ flex: "1 1 280px", borderRadius: "16px" }}>
       <CardActionArea
         component={Link}
         href={href}
-        sx={{ p: 2, height: "100%" }}
+        sx={{
+          height: "100%",
+          py: { xs: 3.25, sm: 4.25 },
+          px: { xs: 2.5, sm: 3.25 },
+        }}
       >
         <Typography
           variant="subtitle1"

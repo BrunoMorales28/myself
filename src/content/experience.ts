@@ -3,7 +3,7 @@ import type { ExperienceEntry } from "./types";
 export const experience: ExperienceEntry[] = [
   {
     id: "globant-sportian",
-    company: "Globant (client: Sportian)",
+    company: "Sportian",
     logoUrl: "/logos/globant.svg",
     role: { en: "React.js Developer", es: "Desarrollador React.js" },
     startDate: "2025-11",
@@ -31,7 +31,7 @@ export const experience: ExperienceEntry[] = [
   },
   {
     id: "ypf-y-tracker",
-    company: "YPF (Y-Tracker)",
+    company: "YPF",
     logoUrl: "/logos/ypf.png",
     role: { en: "React.js Developer", es: "Desarrollador React.js" },
     startDate: "2025-06",
@@ -143,7 +143,7 @@ export const experience: ExperienceEntry[] = [
   },
   {
     id: "santander-tecnologia",
-    company: "Santander Tecnología",
+    company: "Santander",
     logoUrl: "/logos/santander.svg",
     role: { en: "Frontend Web Developer", es: "Desarrollador Web Frontend" },
     startDate: "2020-09",

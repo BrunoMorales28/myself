@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import { studies, getLocalizedText } from "@/content";
 import { formatDateRange } from "@/lib/dateRange";
 import { StudiesList } from "@/components/studies/StudiesList";
+import { Section } from "@/components/layout/Section";
 
 type StudiesPageProps = {
   searchParams: Promise<{ highlight?: string }>;
@@ -32,10 +33,12 @@ export default async function StudiesPage({ searchParams }: StudiesPageProps) {
 
   return (
     <>
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        {t("heading")}
-      </Typography>
-      <StudiesList entries={entries} highlight={highlight} />
+      <Section tint="default">
+        <Typography variant="h1">{t("heading")}</Typography>
+      </Section>
+      <Section tint="light">
+        <StudiesList entries={entries} highlight={highlight} />
+      </Section>
     </>
   );
 }

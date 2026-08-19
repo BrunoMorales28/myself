@@ -35,13 +35,13 @@ export function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <AppBar position="static" color="default" elevation={0}>
+    <AppBar position="static" elevation={0}>
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Typography
           component={Link}
           href="/"
           variant="h6"
-          sx={{ textDecoration: "none", color: "text.primary" }}
+          sx={{ textDecoration: "none", color: "primary.contrastText" }}
         >
           {t("home")}
         </Typography>
@@ -58,18 +58,29 @@ export function Header() {
             spacing={1}
           >
             {navKeys.map((key) => (
-              <Button key={key} component={Link} href={navHref(key)}>
+              <Button
+                key={key}
+                component={Link}
+                href={navHref(key)}
+                sx={{
+                  color: "primary.contrastText",
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,0.12)",
+                  },
+                }}
+              >
                 {t(key)}
               </Button>
             ))}
           </Stack>
-          <LanguageSwitcher />
+          <LanguageSwitcher onDark />
         </Stack>
 
         <Box sx={{ display: { xs: "flex", sm: "none" } }}>
           <IconButton
             aria-label={t("openMenu")}
             onClick={() => setDrawerOpen(true)}
+            sx={{ color: "primary.contrastText" }}
           >
             <MenuIcon />
           </IconButton>

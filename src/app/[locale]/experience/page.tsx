@@ -8,6 +8,7 @@ import {
   type ExperienceListEntry,
 } from "@/components/experience/ExperienceList";
 import { SkillCategorySection } from "@/components/skills/SkillCategorySection";
+import { Section } from "@/components/layout/Section";
 
 type ExperiencePageProps = {
   searchParams: Promise<{ highlight?: string }>;
@@ -57,19 +58,22 @@ export default async function ExperiencePage({
 
   return (
     <>
-      <Typography variant="h1" sx={{ mb: 3 }}>
-        {t("heading")}
-      </Typography>
-      <ExperienceList
-        professionalEntries={professionalEntries}
-        earlyEntries={earlyEntries}
-        professionalHeading={t("professionalHeading")}
-        earlyHeading={t("earlyHeading")}
-        tagsGroupLabel={t("tagsGroupLabel")}
-        highlight={highlight}
-      />
+      <Section tint="default">
+        <Typography variant="h1">{t("heading")}</Typography>
+      </Section>
 
-      <Box component="section" id="skills" sx={{ mt: 4 }}>
+      <Section tint="light">
+        <ExperienceList
+          professionalEntries={professionalEntries}
+          earlyEntries={earlyEntries}
+          professionalHeading={t("professionalHeading")}
+          earlyHeading={t("earlyHeading")}
+          tagsGroupLabel={t("tagsGroupLabel")}
+          highlight={highlight}
+        />
+      </Section>
+
+      <Section tint="default" id="skills">
         <Typography variant="h2" sx={{ mb: 2 }}>
           {tSkills("heading")}
         </Typography>
@@ -86,7 +90,7 @@ export default async function ExperiencePage({
             );
           })}
         </Box>
-      </Box>
+      </Section>
     </>
   );
 }

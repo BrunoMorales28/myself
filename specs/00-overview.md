@@ -69,7 +69,7 @@ Numbering matches the actual filename under `/specs` — this list is kept in sy
 | 14  | [CV PDF generation](./14-cv-pdf-generation.md)                                                                      | ✅ Implemented                    |
 | 15  | [Contact form UI](./15-contact-form-ui.md)                                                                          | ✅ Implemented                    |
 | 16  | [Contact backend](./16-contact-backend.md) (Postgres + API route)                                                   | ✅ Implemented                    |
-| 17  | [Visual restyle](./17-visual-restyle.md) (new theme, typography, full-bleed section backgrounds, mobile-first pass) | 📝 Draft — up next                |
+| 17  | [Visual restyle](./17-visual-restyle.md) (new theme, typography, full-bleed section backgrounds, mobile-first pass) | ✅ Implemented                    |
 | 18  | Contact notifications (Resend + Twilio WhatsApp)                                                                    | Not started                       |
 | 19  | Agent core (Claude API + chat UI, no tools)                                                                         | Not started                       |
 | 20  | Agent tool: CV search                                                                                               | Not started                       |

@@ -1,6 +1,6 @@
 # 17 — Visual Restyle
 
-Status: Draft
+Status: Implemented
 Depends on: [04-theme-design-tokens](./04-theme-design-tokens.md), [05-base-layout](./05-base-layout.md)
 
 ## Goal
@@ -56,3 +56,11 @@ None — this is a frontend-only styling change; no new server code, routes, or 
 - `pnpm storybook` — affected component stories (`ExperienceCard`, `StudyCard`, `FeaturedSectionCard`, `ItemListSection`, `Hero`) render themed with the new tokens.
 - Contrast check: header nav text against the new primary-color `AppBar` background, and body text against every new section-tint background, meet WCAG 2.1 AA (4.5:1 normal text / 3:1 large text) — called out explicitly since this touches color choices across the whole site, per spec 00's standing accessibility rule.
 - `pnpm test`, `pnpm test:storybook`, `pnpm test:e2e`, `pnpm build`, `pnpm lint`, `pnpm typecheck` all pass — no existing test should need behavior changes since this is styling-only, but snapshot-sensitive assertions (if any) get updated.
+
+## Implementation notes (deviations from plan)
+
+- **Primary green darkened from the mockup's `#1F8A5F` to `#1B7C55`.** The mockup hex clears only ~4.33:1 against white in both directions (white text on the green header/buttons, and green text/links on white) — just under the 4.5:1 AA floor for normal text, confirmed by Playwright/axe failures on the header nav, language switcher, and the footer's "View source" link. `#1B7C55` is visually near-identical but clears ~5.2:1 both ways. `sectionTint.light`/`.deep` are derived from this value via `alpha()`, per the "alpha-derived" decision, and still closely match the mockup's `#F1FAF4`/`#E6F6EC` swatches.
+- **Header nav text uses `primary.contrastText` (white) rather than the mockup's light-green tints (`#D7F0E1`/`#C3E8D3`).** Those tints also failed AA (~4.3:1 max) against the header background at any shade of green tested; white clears the same threshold comfortably (~5.2:1) with no visible loss versus the mockup's intent.
+- **Language switcher selected-state contrast**: on the header (`onDark` prop), the selected locale renders as a solid white pill with dark-green text instead of MUI's default translucent overlay, which composited to unreadable dark-on-green. Off the header, the switcher keeps its existing default styling.
+- **Avatar shape stayed circular** (MUI `Avatar` default), not the mockup's rounded-square (`border-radius: 12px`) treatment — the written spec's Scope/Decisions never called out an avatar shape change, only the logo-vs-initials fallback behavior, so the existing shape was left alone to avoid an undiscussed visual change.
+- **Card padding/radius**, taken directly from the design-canvas mockup's `OptionD.dc.html`/`Mobile.dc.html` artboards rather than re-derived: list-item cards (`ItemListSection`, `ExperienceCard`, `StudyCard`) use `py: 2.75/px: 2.25` (mobile) → `py: 3.75/px: 2.5` (`sm`+) with a 14px card radius; `FeaturedSectionCard` uses `py: 3.25/px: 2.5` → `py: 4.25/px: 3.25` with a 16px radius; buttons/base shape radius is 10px.

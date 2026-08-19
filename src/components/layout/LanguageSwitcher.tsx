@@ -6,7 +6,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing } from "@/i18n/routing";
 
-export function LanguageSwitcher() {
+export function LanguageSwitcher({ onDark = false }: { onDark?: boolean }) {
   const t = useTranslations("nav");
   const locale = useLocale();
   const pathname = usePathname();
@@ -23,6 +23,21 @@ export function LanguageSwitcher() {
           router.replace(pathname, { locale: nextLocale });
         }
       }}
+      sx={
+        onDark
+          ? {
+              "& .MuiToggleButton-root": {
+                color: "primary.contrastText",
+                borderColor: "rgba(255,255,255,0.4)",
+              },
+              "& .MuiToggleButton-root.Mui-selected": {
+                color: "primary.dark",
+                backgroundColor: "primary.contrastText",
+                "&:hover": { backgroundColor: "primary.contrastText" },
+              },
+            }
+          : undefined
+      }
     >
       {routing.locales.map((loc) => (
         <ToggleButton key={loc} value={loc} aria-label={loc}>

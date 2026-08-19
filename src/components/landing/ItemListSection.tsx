@@ -27,14 +27,22 @@ export function ItemListSection({
   viewAllLabel,
 }: ItemListSectionProps) {
   return (
-    <Box component="section" sx={{ py: 2 }}>
+    <Box>
       <Typography variant="h2" sx={{ mb: 2 }}>
         {title}
       </Typography>
       <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
         {items.map((item) => (
           <Card key={item.id} sx={{ flex: "1 1 240px" }}>
-            <CardActionArea component={Link} href={item.href} sx={{ p: 2 }}>
+            <CardActionArea
+              component={Link}
+              href={item.href}
+              sx={{
+                height: "100%",
+                py: { xs: 2.75, sm: 3.75 },
+                px: { xs: 2.25, sm: 2.5 },
+              }}
+            >
               <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
                 {item.avatar}
                 <Typography

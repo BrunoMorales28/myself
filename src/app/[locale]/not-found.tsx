@@ -2,12 +2,13 @@ import { getTranslations } from "next-intl/server";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link } from "@/i18n/navigation";
+import { Section } from "@/components/layout/Section";
 
 export default async function LocaleNotFound() {
   const t = await getTranslations("notFound");
 
   return (
-    <>
+    <Section tint="default">
       <Typography variant="h1" sx={{ mb: 2 }}>
         {t("heading")}
       </Typography>
@@ -17,6 +18,6 @@ export default async function LocaleNotFound() {
       <Button component={Link} href="/" variant="contained">
         {t("homeLink")}
       </Button>
-    </>
+    </Section>
   );
 }

@@ -52,7 +52,8 @@ export const ExperienceCard = forwardRef<HTMLDivElement, ExperienceCardProps>(
           aria-controls={detailsId}
           sx={{
             width: "100%",
-            p: 2,
+            py: { xs: 2.75, sm: 3.75 },
+            px: { xs: 2.25, sm: 2.5 },
             justifyContent: "flex-start",
             textAlign: "left",
           }}
