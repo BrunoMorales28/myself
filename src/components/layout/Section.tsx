@@ -21,7 +21,10 @@ export function Section({ children, tint = "default", id }: SectionProps) {
               : "sectionTint.deep",
       }}
     >
-      <Container maxWidth="lg" sx={{ py: { xs: 6, sm: 8 } }}>
+      <Container
+        maxWidth="lg"
+        sx={{ py: { xs: 8, sm: 10 }, px: { xs: 3, sm: 4 } }}
+      >
         {children}
       </Container>
     </Box>

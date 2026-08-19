@@ -29,7 +29,7 @@ export function Hero({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        minHeight: { xs: "70vh", md: "75vh" },
+        minHeight: { xs: "65vh", md: "70vh" },
       }}
     >
       <Typography

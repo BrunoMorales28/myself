@@ -102,7 +102,15 @@ export function Header() {
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
       >
-        <Box role="presentation" sx={{ width: 240 }}>
+        <Box
+          role="presentation"
+          sx={{
+            width: 240,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
           <Box component="nav" aria-label={t("mainNavigation")}>
             <List>
               {navKeys.map((key) => (
@@ -118,7 +126,7 @@ export function Header() {
               ))}
             </List>
           </Box>
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ mt: "auto", p: 2, pt: 4 }}>
             <LanguageSwitcher />
           </Box>
         </Box>
