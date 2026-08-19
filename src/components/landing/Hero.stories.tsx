@@ -11,7 +11,8 @@ type Story = StoryObj<typeof Hero>;
 
 export const Default: Story = {
   args: {
-    title: "Bruno Morales — Web Developer",
+    name: "Bruno Morales",
+    role: "Web Developer",
     intro:
       "This site is Bruno's résumé and portfolio — a working example of the frontend craft described below, built end to end and open source.",
     downloadCvLabel: "Download CV",
@@ -24,7 +25,7 @@ export const Default: Story = {
     await expect(
       canvas.getByRole("heading", {
         level: 1,
-        name: "Bruno Morales — Web Developer",
+        name: "Bruno Morales",
       }),
     ).toBeInTheDocument();
     await expect(

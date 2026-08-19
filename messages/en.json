@@ -16,7 +16,8 @@
     "viewSource": "View source on GitHub"
   },
   "landing": {
-    "heroTitle": "Bruno Morales — Web Developer",
+    "heroName": "Bruno Morales",
+    "heroRole": "Web Developer",
     "heroIntro": "This site is Bruno's résumé and portfolio — a working example of the frontend craft described below, built end to end and open source.",
     "downloadCv": "Download CV",
     "contact": "Contact",

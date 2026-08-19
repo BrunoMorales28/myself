@@ -59,7 +59,7 @@ export async function GET(_request: Request, { params }: RouteParams) {
 
   const buffer = await renderToBuffer(
     <CvDocument
-      headerLine={landingT("heroTitle")}
+      headerLine={`${landingT("heroName")} — ${landingT("heroRole")}`}
       contact={contact}
       experienceHeading={experienceT("professionalHeading")}
       experienceEntries={experienceEntries}

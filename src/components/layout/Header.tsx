@@ -36,12 +36,21 @@ export function Header() {
 
   return (
     <AppBar position="static" elevation={0}>
-      <Toolbar sx={{ justifyContent: "space-between" }}>
+      <Toolbar
+        sx={{
+          justifyContent: "space-between",
+          minHeight: { xs: 72, sm: 88 },
+        }}
+      >
         <Typography
           component={Link}
           href="/"
           variant="h6"
-          sx={{ textDecoration: "none", color: "primary.contrastText" }}
+          sx={{
+            textDecoration: "none",
+            color: "primary.contrastText",
+            fontSize: { xs: "1.375rem", sm: "1.5rem" },
+          }}
         >
           {t("home")}
         </Typography>
@@ -81,8 +90,9 @@ export function Header() {
             aria-label={t("openMenu")}
             onClick={() => setDrawerOpen(true)}
             sx={{ color: "primary.contrastText" }}
+            size="large"
           >
-            <MenuIcon />
+            <MenuIcon fontSize="large" />
           </IconButton>
         </Box>
       </Toolbar>

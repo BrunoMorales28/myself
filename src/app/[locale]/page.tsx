@@ -72,7 +72,8 @@ export default function Home() {
     <>
       <Section tint="default">
         <Hero
-          title={t("heroTitle")}
+          name={t("heroName")}
+          role={t("heroRole")}
           intro={t("heroIntro")}
           downloadCvLabel={t("downloadCv")}
           downloadCvHref={`/${locale}/cv.pdf`}

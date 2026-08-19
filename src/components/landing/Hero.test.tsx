@@ -9,10 +9,11 @@ jest.mock("../../i18n/navigation", () => ({
   ),
 }));
 
-test("renders the title, intro, and both CTAs", () => {
+test("renders the name, role, intro, and both CTAs", () => {
   render(
     <Hero
-      title="Bruno Morales — Web Developer"
+      name="Bruno Morales"
+      role="Web Developer"
       intro="This site is Bruno's résumé and portfolio."
       downloadCvLabel="Download CV"
       downloadCvHref="/cv.pdf"
@@ -24,9 +25,10 @@ test("renders the title, intro, and both CTAs", () => {
   expect(
     screen.getByRole("heading", {
       level: 1,
-      name: "Bruno Morales — Web Developer",
+      name: "Bruno Morales",
     }),
   ).toBeInTheDocument();
+  expect(screen.getByText("Web Developer")).toBeInTheDocument();
   expect(
     screen.getByText("This site is Bruno's résumé and portfolio."),
   ).toBeInTheDocument();

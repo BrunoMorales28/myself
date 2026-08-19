@@ -5,7 +5,8 @@ import Button from "@mui/material/Button";
 import { Link } from "@/i18n/navigation";
 
 type HeroProps = {
-  title: string;
+  name: string;
+  role: string;
   intro: string;
   downloadCvLabel: string;
   downloadCvHref: string;
@@ -14,7 +15,8 @@ type HeroProps = {
 };
 
 export function Hero({
-  title,
+  name,
+  role,
   intro,
   downloadCvLabel,
   downloadCvHref,
@@ -27,14 +29,25 @@ export function Hero({
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        minHeight: { md: "75vh" },
+        minHeight: { xs: "70vh", md: "75vh" },
       }}
     >
       <Typography
         variant="h1"
-        sx={{ mb: 2, fontSize: { xs: "2.25rem", sm: "3rem", md: "3.75rem" } }}
+        sx={{ mb: 1, fontSize: { xs: "2.25rem", sm: "3rem", md: "3.75rem" } }}
       >
-        {title}
+        {name}
+      </Typography>
+      <Typography
+        sx={{
+          mb: 3,
+          fontFamily: "var(--font-body), sans-serif",
+          fontWeight: 500,
+          color: "text.secondary",
+          fontSize: { xs: "1.125rem", sm: "1.25rem", md: "1.5rem" },
+        }}
+      >
+        {role}
       </Typography>
       <Typography
         variant="body1"

@@ -6,10 +6,11 @@ test("home page redirects to a locale and renders", async ({ page }) => {
   await expect(page).toHaveURL(/\/(en|es)\/?$/);
   await expect(
     page.getByRole("heading", {
-      name: "Bruno Morales — Web Developer",
+      name: "Bruno Morales",
       level: 1,
     }),
   ).toBeVisible();
+  await expect(page.getByText("Web Developer")).toBeVisible();
 });
 
 test("landing lists experience, studies, and hobbies with working highlight links", async ({
